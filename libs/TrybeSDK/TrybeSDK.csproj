@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>TrybeSDK</RootNamespace>
+		<ImplicitPackageReferences>false</ImplicitPackageReferences>
+	</PropertyGroup>
+		
+	<ItemGroup>
+		<PackageReference Include="Ben.Demystifier" />
+		<PackageReference Include="MinVer" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+	</ItemGroup>
+</Project>
