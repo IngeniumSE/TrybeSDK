@@ -2,4 +2,4 @@
 
 A .NET SDK built from the Trybe OpenAPI specification
 
-[![.github/workflows/ci.yml](https://github.com/IngeniumSE/TrybeSDK/actions/workflows/ci.yml/badge.svg)](https://github.com/IngeniumSE/TrybeSDK/actions/workflows/ci.yml)
+[![.github/workflows/main.yml](https://github.com/IngeniumSE/TrybeSDK/actions/workflows/main.yml/badge.svg)](https://github.com/IngeniumSE/TrybeSDK/actions/workflows/main.yml) [![.github/workflows/release.yml](https://github.com/IngeniumSE/TrybeSDK/actions/workflows/release.yml/badge.svg)](https://github.com/IngeniumSE/TrybeSDK/actions/workflows/release.yml)
