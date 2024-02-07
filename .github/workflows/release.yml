@@ -19,4 +19,4 @@ jobs:
       run: |
         git log --pretty=format:'%d %s' ${GITHUB_REF} | perl -pe 's| \(.*tag: (\d+.\d+.\d+(-preview\d{3})?)(, .*?)*\)|\n## \1\n|g' > RELEASE_NOTES.md
     - name: Build
-      run: ./build.sh --target Publish --publish --source GitHUb --feed ${{ vars.PUBLIC_NUGET_FEED }} --username ${{ vars.PUBLIC_NUGET_USERNAME }} --token ${{ secrets.PUBLIC_NUGET_APIKEY }}
+      run: ./build.sh --target Publish --publish --nuget --token ${{ secrets.PUBLIC_NUGET_APIKEY }}
