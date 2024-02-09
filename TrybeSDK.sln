@@ -52,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrybeSDK.Extensions.DependencyInjection", "libs\TrybeSDK.Extensions.DependencyInjection\TrybeSDK.Extensions.DependencyInjection.csproj", "{058204F4-0B67-42B4-9FEF-9AE2BCC8E7F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{F45BA32C-F402-4300-BA56-E19F30EA6FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F45BA32C-F402-4300-BA56-E19F30EA6FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F45BA32C-F402-4300-BA56-E19F30EA6FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{058204F4-0B67-42B4-9FEF-9AE2BCC8E7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058204F4-0B67-42B4-9FEF-9AE2BCC8E7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058204F4-0B67-42B4-9FEF-9AE2BCC8E7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058204F4-0B67-42B4-9FEF-9AE2BCC8E7F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{F45BA32C-F402-4300-BA56-E19F30EA6FB7} = {F3DB67FB-0AED-46C2-9F74-A9C197443E68}
 		{B55E88E9-F535-4649-A4E4-CE8495D4DDC6} = {F3DB67FB-0AED-46C2-9F74-A9C197443E68}
 		{9E95ECB2-C721-4367-B515-25C735D6573B} = {71A838D8-527D-41D1-99B0-611404787F46}
+		{058204F4-0B67-42B4-9FEF-9AE2BCC8E7F6} = {3D0CADC5-4B71-455C-9CD0-BDB0B3A74B3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26041282-B1C0-4262-AE2F-DA9CF2480C37}

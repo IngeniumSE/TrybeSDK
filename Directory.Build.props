@@ -10,4 +10,8 @@
 		<PublishReposityUrl>true</PublishReposityUrl>
 		<EmbedUntractSources>true</EmbedUntractSources>
 	</PropertyGroup>
+
+	<ItemGroup Label="Sources">
+		<Compile Include="$(MSBuildThisFileDirectory)build\src\**\*.cs" />
+	</ItemGroup>
 </Project>

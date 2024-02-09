@@ -188,7 +188,7 @@ csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
 # License header
-file_header_template = Copyright (c) 2023 Ingenium Software Engineering Limited
+file_header_template = This work is licensed under the terms of the MIT license.\nFor a copy, see <https://opensource.org/licenses/MIT>.
 csharp_style_namespace_declarations = file_scoped:silent
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_prefer_top_level_statements = true:silent
