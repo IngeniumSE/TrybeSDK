@@ -1,15 +1,15 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
-namespace TrybeSDK;
+namespace TrybeSDK.Frontend;
 
-public partial interface ITrybeSiteClient
+public partial interface ITrybeFrontendClient
 {
 
 }
 
-public partial class TrybeSiteClient : ApiClient, ITrybeSiteClient
+public partial class TrybeFrontendClient : ApiClient, ITrybeFrontendClient
 {
-	public TrybeSiteClient(HttpClient http, TrybeSettings settings)
+	public TrybeFrontendClient(HttpClient http, TrybeSettings settings)
 		: base(http, settings, UrlMap.MapFrontendUrl(settings.Environment, settings.FrontendSubdomain)) { }
 }

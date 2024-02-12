@@ -1,7 +1,7 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
-namespace TrybeSDK;
+namespace TrybeSDK.Api;
 
 partial interface ITrybeApiClient
 {
@@ -24,7 +24,7 @@ partial class TrybeApiClient
 public partial interface ISiteOperations
 {
 	/// <summary>
-	/// Deltes the site with the given ID.
+	/// Deletes the site with the given ID.
 	/// </summary>
 	/// <param name="siteId">The site ID.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>

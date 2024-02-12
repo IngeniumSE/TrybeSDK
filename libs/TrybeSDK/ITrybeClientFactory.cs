@@ -1,13 +1,16 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
+using TrybeSDK.Api;
+using TrybeSDK.Frontend;
+
 namespace TrybeSDK;
 
 public interface ITrybeClientFactory
 {
 	ITrybeApiClient CreateApiClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeApiClient);
 
-	ITrybeSiteClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient);
+	ITrybeFrontendClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient);
 }
 
 /// <summary>
@@ -25,6 +28,6 @@ public class TrybeClientFactory : ITrybeClientFactory
 	public ITrybeApiClient CreateApiClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeApiClient)
 		=> new TrybeApiClient(_httpClientFactory.CreateClient(name), settings);
 
-	public ITrybeSiteClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient)
-		=> new TrybeSiteClient(_httpClientFactory.CreateClient(name), settings);
+	public ITrybeFrontendClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient)
+		=> new TrybeFrontendClient(_httpClientFactory.CreateClient(name), settings);
 }

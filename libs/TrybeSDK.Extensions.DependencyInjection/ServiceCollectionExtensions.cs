@@ -102,7 +102,7 @@ public static class ServiceCollectionExtensions
 		IServiceCollection services,
 		string name,
 		Func<ITrybeClientFactory, TrybeSettings, TClient> factory)
-		where TClient: class
+		where TClient : class
 	{
 		void ConfigureHttpDefaults(HttpClient http)
 		{

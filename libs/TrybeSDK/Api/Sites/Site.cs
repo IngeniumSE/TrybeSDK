@@ -3,7 +3,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace TrybeSDK;
+namespace TrybeSDK.Api;
 
 /// <summary>
 /// A site object.

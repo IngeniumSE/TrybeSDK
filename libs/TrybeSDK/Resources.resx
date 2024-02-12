@@ -123,6 +123,9 @@
   <data name="ApiClient_UnknownResponse" xml:space="preserve">
     <value>An unexpected response was returned from the Trybe API, and we could not determine the actual error in this case.</value>
   </data>
+  <data name="ErrorJsonConverter_InvalidJson" xml:space="preserve">
+    <value>The JSON provided does not represent a well-formed error collection.</value>
+  </data>
   <data name="PathString_MustStartWithSlash" xml:space="preserve">
     <value>A path string must start with a slash '/'.</value>
   </data>

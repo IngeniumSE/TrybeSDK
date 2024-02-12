@@ -79,6 +79,15 @@ namespace TrybeSDK {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The JSON provided does not represent a well-formed error collection..
+        /// </summary>
+        internal static string ErrorJsonConverter_InvalidJson {
+            get {
+                return ResourceManager.GetString("ErrorJsonConverter_InvalidJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A path string must start with a slash &apos;/&apos;..
         /// </summary>
         internal static string PathString_MustStartWithSlash {

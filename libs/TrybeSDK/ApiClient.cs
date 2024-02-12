@@ -1,6 +1,7 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,6 +16,7 @@ public abstract class ApiClient
 	readonly HttpClient _http;
 	readonly TrybeSettings _settings;
 	readonly JsonSerializerOptions _serializerOptions = JsonUtility.CreateSerializerOptions();
+	readonly JsonSerializerOptions _deserializerOptions = JsonUtility.CreateDeserializerOptions();
 	readonly Uri _baseUrl;
 
 	protected ApiClient(HttpClient http, TrybeSettings settings, string baseUrl)
@@ -24,6 +26,7 @@ public abstract class ApiClient
 		_baseUrl = new Uri(baseUrl);
 	}
 
+	#region Send and Fetch
 	protected internal async Task<TrybeResponse> SendAsync(
 		TrybeRequest request,
 		CancellationToken cancellationToken = default)
@@ -135,7 +138,40 @@ public abstract class ApiClient
 
 		return transformedResponse;
 	}
+	#endregion
 
+	#region Preprocessing
+	protected internal HttpRequestMessage CreateHttpRequest(
+		TrybeRequest request)
+	{
+		string pathAndQuery = request.Resource.ToUriComponent();
+		if (request.Query.HasValue)
+		{
+			pathAndQuery += request.Query.Value.ToUriComponent();
+		}
+		var uri = new Uri(_baseUrl, pathAndQuery);
+
+
+		var message = new HttpRequestMessage(request.Method, uri);
+		message.Headers.TryAddWithoutValidation("Authorization", $"Bearer {_settings.ApiKey}");
+
+		return message;
+	}
+
+	protected internal HttpRequestMessage CreateHttpRequest<TRequest>(
+		TrybeRequest<TRequest> request)
+		where TRequest : notnull
+	{
+		var message = CreateHttpRequest((TrybeRequest)request);
+
+		message.Content = JsonContent.Create(
+			inputValue: request.Data, options: _serializerOptions);
+
+		return message;
+	}
+	#endregion
+
+	#region Postprocessing
 	protected internal async Task<TrybeResponse> TransformResponse(
 		HttpMethod method,
 		Uri uri,
@@ -150,11 +186,11 @@ public abstract class ApiClient
 				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(cancellationToken);
 				if (result?.Message is not { Length: > 0 })
 				{
-					error = new(Resources.ApiClient_UnknownResponse);
+					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
 				}
 				else
 				{
-					error = new(result.Message);
+					error = new(result.Message, result.Errors);
 				}
 			}
 			else
@@ -199,14 +235,15 @@ public abstract class ApiClient
 			Error error;
 			if (response.Content is not null)
 			{
-				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(cancellationToken);
+				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(
+					_deserializerOptions, cancellationToken);
 				if (result?.Message is not { Length: > 0 })
 				{
-					error = new(Resources.ApiClient_UnknownResponse);
+					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
 				}
 				else
 				{
-					error = new(result.Message);
+					error = new(result.Message, result.Errors);
 				}
 			}
 			else
@@ -217,13 +254,17 @@ public abstract class ApiClient
 			return error;
 		}
 
+		var rateLimiting = GetRateLimiting(response);
+
 		if (response.IsSuccessStatusCode)
 		{
 			DataContainer<TResponse>? data = default;
 			Meta? meta = default;
 			if (response.Content is not null)
 			{
-				data = await response.Content.ReadFromJsonAsync<DataContainer<TResponse>>(cancellationToken);
+				data = await response.Content.ReadFromJsonAsync<DataContainer<TResponse>>(
+					_deserializerOptions, cancellationToken);
+
 				if (data?.Meta is not null)
 				{
 					meta = new Meta
@@ -242,7 +283,8 @@ public abstract class ApiClient
 				response.IsSuccessStatusCode,
 				response.StatusCode,
 				data: data?.Data,
-				meta: meta
+				meta: meta,
+				rateLimiting: rateLimiting
 			);
 		}
 		else
@@ -254,48 +296,31 @@ public abstract class ApiClient
 				uri,
 				response.IsSuccessStatusCode,
 				response.StatusCode,
+				rateLimiting: rateLimiting,
 				error: error
 			);
 		}
 	}
 
-	protected internal HttpRequestMessage CreateHttpRequest(
-		TrybeRequest request)
+	RateLimiting? GetRateLimiting(HttpResponseMessage response)
 	{
-		string pathAndQuery = request.Resource.ToUriComponent();
-		if (request.Query.HasValue)
-		{
-			pathAndQuery += request.Query.Value.ToUriComponent();
-		}
-		var uri = new Uri(_baseUrl, pathAndQuery);
+		var headers = response.Headers;
 
-
-		var message = new HttpRequestMessage(request.Method, uri);
-		message.Headers.TryAddWithoutValidation("Authorization", $"Bearer {_settings.ApiKey}");
-
-		return message;
+		return int.TryParse(GetHeader("X-Ratelimit-Remaining", headers), out int remaining)
+			&& int.TryParse(GetHeader("X-Ratelimit-Limit", headers), out int limit)
+			? new RateLimiting { Limit = limit, Remaining = remaining } : null;
 	}
 
-	protected internal HttpRequestMessage CreateHttpRequest<TRequest>(
-		TrybeRequest<TRequest> request)
-		where TRequest : notnull
-	{
-		var message = CreateHttpRequest((TrybeRequest)request);
-
-		message.Content = JsonContent.Create(
-			inputValue: request.Data, options: _serializerOptions);
-
-		return message;
-	}
-
-	protected internal Lazy<TOperations> Defer<TOperations>(Func<ApiClient, TOperations> factory)
-		=> new Lazy<TOperations>(() => factory(this));
-
-	protected internal Uri Root(string resource)
-		=> new Uri(resource, UriKind.Relative);
+	string? GetHeader(string name, HttpHeaders headers)
+		=> headers.TryGetValues(name, out var values)
+		? values.First()
+		: null;
 
 	class ErrorContainer
 	{
+		[JsonPropertyName("errors")]
+		public Dictionary<string, string[]>? Errors { get; set; }
+
 		[JsonPropertyName("message")]
 		public string Message { get; set; } = default!;
 	}
@@ -329,4 +354,11 @@ public abstract class ApiClient
 		[JsonPropertyName("total")]
 		public int Total { get; set; }
 	}
+	#endregion
+
+	protected internal Lazy<TOperations> Defer<TOperations>(Func<ApiClient, TOperations> factory)
+		=> new Lazy<TOperations>(() => factory(this));
+
+	protected internal Uri Root(string resource)
+		=> new Uri(resource, UriKind.Relative);
 }

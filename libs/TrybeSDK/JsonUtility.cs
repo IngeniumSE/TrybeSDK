@@ -18,4 +18,15 @@ static class JsonUtility
 
 		return options;
 	}
+
+	public static JsonSerializerOptions CreateDeserializerOptions()
+	{
+		JsonSerializerOptions options = new()
+		{
+			WriteIndented = false,
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+		};
+
+		return options;
+	}
 }
