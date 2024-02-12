@@ -22,7 +22,12 @@ public class TrybeSettings
 	/// <summary>
 	/// Gets or sets the base URL.
 	/// </summary>
-	public string ApiUrl { get; set; } = default!;
+	public TrybeEnvironment Environment { get; set; } = TrybeEnvironment.Production;
+
+	/// <summary>
+	/// Gets the frontend subdomain.
+	/// </summary>
+	public string FrontendSubdomain { get; set; } = default!;
 
 	/// <summary>
 	/// Gets or sets the Trybe Partner ID.
@@ -40,11 +45,6 @@ public class TrybeSettings
 	public bool CaptureResponseContent { get; set; }
 
 	/// <summary>
-	/// Gets or sets the shop URL.
-	/// </summary>
-	public string ShopUrl { get; set; } = default!;
-
-	/// <summary>
 	/// Returns the settings as a wrapped options instance.
 	/// </summary>
 	/// <returns>The options instance.</returns>
@@ -56,6 +56,22 @@ public class TrybeSettings
 	/// </summary>
 	public void Validate()
 		=> TrybeSettingsValidator.Instance.Validate(this);
+}
+
+/// <summary>
+/// Represents the possible Trybe environments.
+/// </summary>
+public enum TrybeEnvironment
+{
+	/// <summary>
+	/// Any Trybe instance hosted at https://api.try.be, with frontend host at https://{frontendSubdomain}.try.be
+	/// </summary>
+	Production,
+
+	/// <summary>
+	/// Any Trybe instance hosted at https://api.playground.try.be, with frontend hosted at https://{frontendSubdomain}.playground.try.be.
+	/// </summary>
+	Playground
 }
 
 /// <summary>
@@ -74,14 +90,12 @@ public class TrybeSettingsValidator : AbstractValidator<TrybeSettings>
 			.NotEmpty()
 			.WithMessage(Resources.TrybeSettingsValidator_ApiKey_ValidationMessage);
 
-		RuleFor(s => s.ApiUrl)
-			.NotEmpty()
-			.Must(ValidateUri)
-			.WithMessage(Resources.TrybeSettingsValidator_ApiUrl_ValidationMessage);
+		RuleFor(s => s.Environment)
+			.IsInEnum()
+			.WithMessage(Resources.TrybeSettingsValidator_FrontendSubdomain_ValidationMessage);
 
-		RuleFor(s => s.ShopUrl)
+		RuleFor(s => s.FrontendSubdomain)
 			.NotEmpty()
-			.Must(ValidateUri)
-			.WithMessage(Resources.TrybeSettingsValidator_ShopUrl_ValidationMessage);
+			.WithMessage(Resources.TrybeSettingsValidator_FrontendSubdomain_ValidationMessage);
 	}
 }

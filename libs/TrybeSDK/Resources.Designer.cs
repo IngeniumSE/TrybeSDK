@@ -79,6 +79,15 @@ namespace TrybeSDK {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A path string must start with a slash &apos;/&apos;..
+        /// </summary>
+        internal static string PathString_MustStartWithSlash {
+            get {
+                return ResourceManager.GetString("PathString_MustStartWithSlash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A Trybe API key must be provided..
         /// </summary>
         internal static string TrybeSettingsValidator_ApiKey_ValidationMessage {
@@ -88,20 +97,29 @@ namespace TrybeSDK {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A Trybe API base URL must be provided..
+        ///   Looks up a localized string similar to A valid Trybe environment, of either Production or Playground must be provided..
         /// </summary>
-        internal static string TrybeSettingsValidator_ApiUrl_ValidationMessage {
+        internal static string TrybeSettingsValidator_Environment_ValidationMessage {
             get {
-                return ResourceManager.GetString("TrybeSettingsValidator_ApiUrl_ValidationMessage", resourceCulture);
+                return ResourceManager.GetString("TrybeSettingsValidator_Environment_ValidationMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A Trybe Shop base URL must be provided..
+        ///   Looks up a localized string similar to A valid Trybe frontend subdomain must be provided. This is the subdomain component of the full site Trybe URL. E.g. For a website available at demo.try.be, the frontend subdomain value would be &apos;demo&apos;..
         /// </summary>
-        internal static string TrybeSettingsValidator_ShopUrl_ValidationMessage {
+        internal static string TrybeSettingsValidator_FrontendSubdomain_ValidationMessage {
             get {
-                return ResourceManager.GetString("TrybeSettingsValidator_ShopUrl_ValidationMessage", resourceCulture);
+                return ResourceManager.GetString("TrybeSettingsValidator_FrontendSubdomain_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A valid Trybe environment, of either Production of Playground must be provided..
+        /// </summary>
+        internal static string UrlMap_Environment_ValidationMessage {
+            get {
+                return ResourceManager.GetString("UrlMap_Environment_ValidationMessage", resourceCulture);
             }
         }
     }

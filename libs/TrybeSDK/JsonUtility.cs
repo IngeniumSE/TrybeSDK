@@ -2,6 +2,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace TrybeSDK;
 
@@ -11,7 +12,8 @@ static class JsonUtility
 	{
 		JsonSerializerOptions options = new()
 		{
-			WriteIndented = false
+			WriteIndented = false,
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 		};
 
 		return options;

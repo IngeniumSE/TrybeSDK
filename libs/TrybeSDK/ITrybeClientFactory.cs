@@ -7,7 +7,7 @@ public interface ITrybeClientFactory
 {
 	ITrybeApiClient CreateApiClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeApiClient);
 
-	ITrybeShopClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient);
+	ITrybeSiteClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient);
 }
 
 /// <summary>
@@ -25,6 +25,6 @@ public class TrybeClientFactory : ITrybeClientFactory
 	public ITrybeApiClient CreateApiClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeApiClient)
 		=> new TrybeApiClient(_httpClientFactory.CreateClient(name), settings);
 
-	public ITrybeShopClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient)
-		=> new TrybeShopClient(_httpClientFactory.CreateClient(name), settings);
+	public ITrybeSiteClient CreateShopClient(TrybeSettings settings, string name = TrybeApiConstants.DefaultTrybeShopClient)
+		=> new TrybeSiteClient(_httpClientFactory.CreateClient(name), settings);
 }

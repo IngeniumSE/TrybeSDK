@@ -11,5 +11,5 @@ public partial interface ITrybeApiClient
 public partial class TrybeApiClient : ApiClient, ITrybeApiClient
 {
 	public TrybeApiClient(HttpClient http, TrybeSettings settings)
-		: base(http, settings, settings.ApiUrl) { }
+		: base(http, settings, UrlMap.MapApiUrl(settings.Environment)) { }
 }

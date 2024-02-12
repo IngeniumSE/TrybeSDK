@@ -10,18 +10,32 @@ namespace TrybeSDK;
 /// </summary>
 /// <param name="method">The HTTP method requested.</param>
 /// <param name="uri">The URI requested.</param>
-/// <param name="isSuccessStatusCode">States whether the status code is a success HTTP status code.</param>
+/// <param name="isSuccess">States whether the status code is a success HTTP status code.</param>
 /// <param name="statusCode">The HTTP status code returned.</param>
+/// <param name="meta">The paging metadata for the request, if available.</param>
+/// <param name="error">The API error, if available.</param>
 public class TrybeResponse(
 	HttpMethod method,
 	Uri uri,
-	bool isSuccessStatusCode,
-	HttpStatusCode statusCode)
+	bool isSuccess,
+	HttpStatusCode statusCode,
+	Meta? meta = default,
+	Error? error = default)
 {
 	/// <summary>
 	/// Gets whether the status code represents a success HTTP status code.
 	/// </summary>
-	public bool IsSuccessStatusCode => isSuccessStatusCode;
+	public bool IsSuccess => isSuccess;
+
+	/// <summary>
+	/// Gets the error.
+	/// </summary>
+	public Error? Error => error;
+
+	/// <summary>
+	/// Gets th metadata.
+	/// </summary>
+	public Meta? Meta => meta;
 
 	/// <summary>
 	/// Gets the HTTP status code of the response.
@@ -54,15 +68,19 @@ public class TrybeResponse(
 /// </summary>
 /// <param name="method">The HTTP method requested.</param>
 /// <param name="uri">The URI requested.</param>
-/// <param name="isSuccessStatusCode">States whether the status code is a success HTTP status code.</param>
+/// <param name="isSuccess">States whether the status code is a success HTTP status code.</param>
 /// <param name="statusCode">The HTTP status code.</param>
+/// <param name="data">The API response data, if available.</param>
+/// <param name="error">The API error, if available.</param>
 /// <typeparam name="TData">The data type.</typeparam>
 public class TrybeResponse<TData>(
 	HttpMethod method,
 	Uri uri,
-	bool isSuccessStatusCode,
+	bool isSuccess,
 	HttpStatusCode statusCode,
-	TData? data) : TrybeResponse(method, uri, isSuccessStatusCode, statusCode)
+	TData? data = default,
+	Meta? meta = default,
+	Error? error = default) : TrybeResponse(method, uri, isSuccess, statusCode, meta, error)
 	where TData : class
 {
 	/// <summary>
@@ -79,36 +97,38 @@ public class TrybeResponse<TData>(
 /// <summary>
 /// Represents a Trybe error response.
 /// </summary>
-/// <param name="method">The HTTP method requested.</param>
-/// <param name="uri">The URI requested.</param>
-/// <param name="statusCode">The HTTP status code.</param>
-public class TrybeError(
-	HttpMethod method,
-	Uri uri,
-	HttpStatusCode statusCode)
-	: TrybeResponse(method, uri, false, statusCode)
+/// <param name="message">The error message.</param>
+public class Error(string message)
 {
 	/// <summary>
 	/// Gets the error message.
 	/// </summary>
-	public string Message { get; set; } = default!;
+	public string Message => message;
 }
+
 /// <summary>
-/// Represents a Trybe error response.
+/// Represents metadata for a Trybe request.
 /// </summary>
-/// <param name="method">The HTTP method requested.</param>
-/// <param name="uri">The URI requested.</param>
-/// <param name="statusCode">The HTTP status code.</param>
-/// <typeparam name="TData">The data type.</typeparam>
-public class TrybeError<TData>(
-	HttpMethod method,
-	Uri uri,
-	HttpStatusCode statusCode)
-	: TrybeResponse<TData>(method, uri, false, statusCode, default)
-	where TData : class
+public class Meta
 {
 	/// <summary>
-	/// Gets the error message.
+	/// Gets the current page.
 	/// </summary>
-	public string Message { get; set; } = default!;
+	public int Page { get; set; }
+
+	/// <summary>
+	/// Gets the page size.
+	/// </summary>
+	public int PageSize { get; set; }
+
+	/// <summary>
+	/// Gets or sets the total number of items.
+	/// </summary>
+	public int TotalItems { get; set; }
+
+	/// <summary>
+	/// Gets or sets the total number of pages.
+	/// </summary>
+	public int TotalPages { get; set; }
+
 }

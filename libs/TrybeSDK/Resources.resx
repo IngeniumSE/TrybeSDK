@@ -123,13 +123,19 @@
   <data name="ApiClient_UnknownResponse" xml:space="preserve">
     <value>An unexpected response was returned from the Trybe API, and we could not determine the actual error in this case.</value>
   </data>
+  <data name="PathString_MustStartWithSlash" xml:space="preserve">
+    <value>A path string must start with a slash '/'.</value>
+  </data>
   <data name="TrybeSettingsValidator_ApiKey_ValidationMessage" xml:space="preserve">
     <value>A Trybe API key must be provided.</value>
   </data>
-  <data name="TrybeSettingsValidator_ApiUrl_ValidationMessage" xml:space="preserve">
-    <value>A Trybe API base URL must be provided.</value>
+  <data name="TrybeSettingsValidator_Environment_ValidationMessage" xml:space="preserve">
+    <value>A valid Trybe environment, of either Production or Playground must be provided.</value>
   </data>
-  <data name="TrybeSettingsValidator_ShopUrl_ValidationMessage" xml:space="preserve">
-    <value>A Trybe Shop base URL must be provided.</value>
+  <data name="TrybeSettingsValidator_FrontendSubdomain_ValidationMessage" xml:space="preserve">
+    <value>A valid Trybe frontend subdomain must be provided. This is the subdomain component of the full site Trybe URL. E.g. For a website available at demo.try.be, the frontend subdomain value would be 'demo'.</value>
+  </data>
+  <data name="UrlMap_Environment_ValidationMessage" xml:space="preserve">
+    <value>A valid Trybe environment, of either Production of Playground must be provided.</value>
   </data>
 </root>

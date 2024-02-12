@@ -8,9 +8,11 @@ namespace TrybeSDK;
 /// </summary>
 /// <param name="method">The HTTP method.</param>
 /// <param name="resource">The relative resource.</param>
+/// <param name="query">The query string.</param>
 public class TrybeRequest(
 	HttpMethod method,
-	string resource)
+	PathString resource,
+	QueryString? query = null)
 {
 	/// <summary>
 	/// Gets the HTTP method for the request.
@@ -20,7 +22,12 @@ public class TrybeRequest(
 	/// <summary>
 	/// Gets the relative resource for the request.
 	/// </summary>
-	public string Resource => resource;
+	public PathString Resource => resource;
+
+	/// <summary>
+	/// Gets the query string.
+	/// </summary>
+	public QueryString? Query => query;
 }
 
 /// <summary>
@@ -32,8 +39,9 @@ public class TrybeRequest(
 /// <typeparam name="TData">The data type.</typeparam>
 public class TrybeRequest<TData>(
 	HttpMethod method,
-	string resource,
-	TData data) : TrybeRequest(method, resource)
+	PathString resource,
+	TData data,
+	QueryString? query = null) : TrybeRequest(method, resource, query)
 	where TData : notnull
 {
 	/// <summary>
