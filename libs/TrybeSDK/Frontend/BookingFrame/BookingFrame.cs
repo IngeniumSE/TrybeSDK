@@ -98,7 +98,13 @@ public class CreateBookingFrameRequest
 	/// If true, the booking frame will not display any prices.
 	/// </summary>
 	[JsonPropertyName("hide_prices")]
-	public required bool HidePrices { get; init; }
+	public required bool HidePrices { get; set; }
+
+	/// <summary>
+	/// The set of language mappings
+	/// </summary>
+	[JsonPropertyName("lang")]
+	public StringDictionary? Language { get; set; } = new();
 
 	/// <summary>
 	/// The number of guests.
@@ -116,5 +122,11 @@ public class CreateBookingFrameRequest
 	/// The ID of the reservation, as provided by the partner.
 	/// </summary>
 	[JsonPropertyName("reservation_id")]
-	public string? ReservationId { get; init; }
+	public required string ReservationId { get; init; }
+
+	/// <summary>
+	/// The set of theme settings
+	/// </summary>
+	[JsonPropertyName("theme")]
+	public StringDictionary? Theme { get; set; } = new();
 }

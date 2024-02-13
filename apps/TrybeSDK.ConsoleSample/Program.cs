@@ -23,7 +23,11 @@ var bookingFrame = await frontend.BookingFrames.CreateBookingFrameAsync(
 		DateTo = new(2024,04,01),
 		NumberOfGuests = 1,
 		ConfigureOnlyMode = true,
-		HidePrices = true
+		HidePrices = true,
+		Language = new StringDictionary
+		{
+			["continue_button"] = "add_to_basket"
+		}
 	});
 
 Console.WriteLine(bookingFrame);
