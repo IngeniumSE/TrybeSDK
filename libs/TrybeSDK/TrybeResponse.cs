@@ -1,7 +1,9 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
+using System.Diagnostics;
 using System.Net;
+using System.Text;
 
 namespace TrybeSDK;
 
@@ -15,6 +17,7 @@ namespace TrybeSDK;
 /// <param name="meta">The paging metadata for the request, if available.</param>
 /// <param name="rateLimiting">The rate limiting metadata for the request, if available.</param>
 /// <param name="error">The API error, if available.</param>
+[DebuggerDisplay("{ToDebuggerString(),nq}")]
 public class TrybeResponse(
 	HttpMethod method,
 	Uri uri,
@@ -68,6 +71,22 @@ public class TrybeResponse(
 	/// Gets or sets the response content, when logging is enabled.
 	/// </summary>
 	public string? ResponseContent { get; set; }
+
+	/// <summary>
+	/// Provides a string representation for debugging.
+	/// </summary>
+	/// <returns></returns>
+	public virtual string ToDebuggerString()
+	{
+		var builder = new StringBuilder();
+		builder.Append($"{StatusCode}: {RequestMethod} {RequestUri.PathAndQuery}");
+		if (Error is not null)
+		{
+			builder.Append($" - {Error.Message}");
+		}
+
+		return builder.ToString();
+	}
 }
 
 /// <summary>
@@ -102,6 +121,23 @@ public class TrybeResponse<TData>(
 	/// Gets whether the response has data.
 	/// </summary>
 	public bool HasData => data is not null;
+
+	public override string ToDebuggerString()
+	{
+		var builder = new StringBuilder();
+		builder.Append($"{StatusCode}");
+		if (HasData)
+		{
+			builder.Append($" ({Data!.GetType().Name})");
+		}
+		builder.Append($": {RequestMethod} {RequestUri.PathAndQuery}");
+		if (Error is not null)
+		{
+			builder.Append($" - {Error.Message}");
+		}
+
+		return builder.ToString();
+	}
 }
 
 /// <summary>

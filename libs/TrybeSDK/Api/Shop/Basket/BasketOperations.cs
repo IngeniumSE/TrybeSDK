@@ -1,6 +1,8 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
+using System.Threading;
+
 namespace TrybeSDK.Api;
 
 partial interface IShopOperations
@@ -33,6 +35,16 @@ public partial interface IBasketOperations
 	Task<TrybeResponse<Basket>> GetBasketAsync(
 		string basketId,
 		CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// Reserves the given basket.
+	/// </summary>
+	/// <param name="basketId">The basket ID.</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	/// <returns></returns>
+	Task<TrybeResponse<Basket>> ReserveBasketAsync(
+		string basketId,
+		CancellationToken cancellationToken = default);
 }
 
 public partial class BasketOperations(PathString path, ApiClient client): IBasketOperations
@@ -44,6 +56,17 @@ public partial class BasketOperations(PathString path, ApiClient client): IBaske
 		Ensure.IsNotNullOrEmpty(basketId, nameof(basketId));
 
 		var request = new TrybeRequest(HttpMethod.Get, path + $"/{basketId}");
+
+		return await client.FetchAsync<Basket>(request, cancellationToken);
+	}
+
+	public async Task<TrybeResponse<Basket>> ReserveBasketAsync(
+		string basketId,
+		CancellationToken cancellationToken = default)
+	{
+		Ensure.IsNotNullOrEmpty(basketId, nameof(basketId));
+
+		var request = new TrybeRequest(HttpMethod.Post, path + $"/{basketId}/reserve");
 
 		return await client.FetchAsync<Basket>(request, cancellationToken);
 	}

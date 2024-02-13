@@ -34,7 +34,7 @@ var bookingFrame = await frontend.BookingFrames.CreateBookingFrameAsync(
 string basketId = bookingFrame.Data.Basket.Id;
 
 // MA - Add an item to the basket.
-var itemResponse = await api.Shop.Baskets.AddBasketItemAsync(
+var basket = await api.Shop.Baskets.AddBasketItemAsync(
 	basketId,
 	new AddBasketItemRequest
 	{
@@ -45,15 +45,32 @@ var itemResponse = await api.Shop.Baskets.AddBasketItemAsync(
 		Guests = bookingFrame.Data.Basket.Guests
 	});
 
-string basketItemId = itemResponse.Data.Items[0].Id;
+var guest = basket.Data.Guests[0];
+guest.Name = "Matthew Abbott";
+guest.IsLeadBooker = true;
 
-itemResponse = await api.Shop.Baskets.DeleteBasketItemAsync(
+await api.Shop.Baskets.UpdateBasketGuestsAsync(
 	basketId,
-	basketItemId);
+	new UpdateBasketGuestsRequest
+	{
+		Guests = basket.Data.Guests
+	});
 
-// MA - Fetch the basket.
-var response = await api.Shop.Baskets.GetBasketAsync(bookingFrame.Data!.Basket!.Id);
-Console.WriteLine(response.Data);
+await api.Shop.Baskets.SetCustomerAsync(
+	basketId,
+	new Customer
+	{
+		FirstName = "Matthew",
+		LastName = "Abbott",
+		Email = "matt@ingeniumsoftware.dev",
+		HasPassword = false,
+		Phone = "07944747565"
+	});
+
+var response = await api.Shop.Baskets.ReserveBasketAsync(
+	basketId);
+
+Console.WriteLine(response);
 
 TrybeSettings GetSettings()
 {

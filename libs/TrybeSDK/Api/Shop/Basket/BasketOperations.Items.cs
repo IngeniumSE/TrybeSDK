@@ -49,6 +49,19 @@ partial interface IBasketOperations
 		string basketItemId,
 		UpdateBasketItemRequest request,
 		CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// Updates guests on the basket.
+	/// HTTP POST /shop/basket/{basketId}/update-guests
+	/// </summary>
+	/// <param name="basketId">The ID of the basket.</param>
+	/// <param name="request">The request representing the update operation.</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	/// <returns>The updated basket instance.</returns>
+	Task<TrybeResponse<Basket>> UpdateBasketGuestsAsync(
+		string basketId,
+		UpdateBasketGuestsRequest request,
+		CancellationToken cancellationToken = default);
 }
 
 partial class BasketOperations
@@ -92,6 +105,19 @@ partial class BasketOperations
 		var request = new TrybeRequest<UpdateBasketItemRequest>(HttpMethod.Put, path + $"/{basketId}/items/{basketItemId}", itemRequest);
 
 		return await client.FetchAsync<UpdateBasketItemRequest, Basket>(request, cancellationToken);
+	}
+
+	public async Task<TrybeResponse<Basket>> UpdateBasketGuestsAsync(
+		string basketId,
+		UpdateBasketGuestsRequest guestsRequest,
+		CancellationToken cancellationToken = default)
+	{
+		Ensure.IsNotNullOrEmpty(basketId, nameof(basketId));
+		Ensure.IsNotNull(guestsRequest, nameof(guestsRequest));
+
+		var request = new TrybeRequest<UpdateBasketGuestsRequest>(HttpMethod.Post, path + $"/{basketId}/update-guests", guestsRequest);
+
+		return await client.FetchAsync<UpdateBasketGuestsRequest, Basket>(request, cancellationToken);
 	}
 }
 
@@ -201,4 +227,16 @@ public class UpdateBasketItemRequest
 	/// </summary>
 	[JsonPropertyName("time")]
 	public TimeSpan? Time { get; set; }
+}
+
+/// <summary>
+/// Represents a request to update guests for the basket.
+/// </summary>
+public class UpdateBasketGuestsRequest
+{
+	/// <summary>
+	/// The set of guests for the basket.
+	/// </summary>
+	[JsonPropertyName("guests")]
+	public required GuestList Guests { get; init; }
 }

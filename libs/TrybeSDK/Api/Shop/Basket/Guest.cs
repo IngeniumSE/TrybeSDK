@@ -22,7 +22,7 @@ public class Guest
 	/// </summary>
 	/// <value>The guest's full name.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; init; }
+	public required string Name { get; set; }
 
 	/// <summary>
 	/// Whether this guest is the lead booker
