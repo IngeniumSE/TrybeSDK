@@ -25,6 +25,7 @@ public partial interface ISiteOperations
 {
 	/// <summary>
 	/// Deletes the site with the given ID.
+	/// HTTP DELETE /site/{siteId}
 	/// </summary>
 	/// <param name="siteId">The site ID.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>

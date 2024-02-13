@@ -14,6 +14,7 @@ var http = CreateHttpClient();
 var api = new TrybeApiClient(http, settings);
 var frontend = new TrybeFrontendClient(http, settings);
 
+// MA - Create a booking frame.
 var bookingFrame = await frontend.BookingFrames.CreateBookingFrameAsync(
 	new CreateBookingFrameRequest
 	{
@@ -30,7 +31,29 @@ var bookingFrame = await frontend.BookingFrames.CreateBookingFrameAsync(
 		}
 	});
 
-Console.WriteLine(bookingFrame);
+string basketId = bookingFrame.Data.Basket.Id;
+
+// MA - Add an item to the basket.
+var itemResponse = await api.Shop.Baskets.AddBasketItemAsync(
+	basketId,
+	new AddBasketItemRequest
+	{
+		OfferingId = "6372bc492ea8f57d2508fe82",
+		OfferingType = "package",
+		Date = new(2024, 04, 02),
+		Quantity = 1,
+		Guests = bookingFrame.Data.Basket.Guests
+	});
+
+string basketItemId = itemResponse.Data.Items[0].Id;
+
+itemResponse = await api.Shop.Baskets.DeleteBasketItemAsync(
+	basketId,
+	basketItemId);
+
+// MA - Fetch the basket.
+var response = await api.Shop.Baskets.GetBasketAsync(bookingFrame.Data!.Basket!.Id);
+Console.WriteLine(response.Data);
 
 TrybeSettings GetSettings()
 {

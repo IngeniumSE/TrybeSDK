@@ -25,6 +25,7 @@ public partial interface IBookingFrameOperations
 {
 	/// <summary>
 	/// Creates a booking frame.
+	/// HTTP POST /booking-frame/create
 	/// </summary>
 	/// <param name="request">The create booking frame request.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>

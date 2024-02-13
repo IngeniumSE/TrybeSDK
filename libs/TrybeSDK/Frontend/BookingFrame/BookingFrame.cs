@@ -85,13 +85,13 @@ public class CreateBookingFrameRequest
 	/// <summary>
 	/// The minimum date for offerings.
 	/// </summary>
-	[JsonPropertyName("date_from"), JsonConverter(typeof(DateFormatJsonConverter))]
+	[JsonPropertyName("date_from")]
 	public required DateTime DateFrom { get; init; }
 
 	/// <summary>
 	/// The maximum date for offerings.
 	/// </summary>
-	[JsonPropertyName("date_to"), JsonConverter(typeof(DateFormatJsonConverter))]
+	[JsonPropertyName("date_to")]
 	public required DateTime DateTo { get; init; }
 
 	/// <summary>

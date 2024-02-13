@@ -4,6 +4,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using TrybeSDK.Primitives;
+
 namespace TrybeSDK;
 
 static class JsonUtility
@@ -15,6 +17,8 @@ static class JsonUtility
 			WriteIndented = false,
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 		};
+
+		options.Converters.Add(new DateFormatJsonConverter());
 
 		return options;
 	}

@@ -47,7 +47,7 @@ public class TrybeResponse(
 	/// <summary>
 	/// Gets the rate limiting metdata for the request.
 	/// </summary>
-	public RateLimiting? rateLimiting1 => rateLimiting;
+	public RateLimiting? RateLimiting => rateLimiting;
 
 	/// <summary>
 	/// Gets or sets the request HTTP method.
