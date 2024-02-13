@@ -12,12 +12,12 @@ public class EquipmentSummary
 	/// </summary>
 	/// <value>The ID of the equipment.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; init; }
+	public required string Id { get; set; }
 
 	/// <summary>
 	/// The name of the equipment.
 	/// </summary>
 	/// <value>The name of the equipment.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; init; }
+	public required string Name { get; set; }
 }

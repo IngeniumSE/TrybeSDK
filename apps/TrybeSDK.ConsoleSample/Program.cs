@@ -67,8 +67,34 @@ await api.Shop.Baskets.SetCustomerAsync(
 		Phone = "07944747565"
 	});
 
-var response = await api.Shop.Baskets.ReserveBasketAsync(
+await api.Shop.Baskets.ReserveBasketAsync(
 	basketId);
+
+var orderResponse = await api.Shop.Orders.SubmitOrderAsync(
+	basketId);
+
+string orderId = orderResponse.Data.Id;
+
+await api.Shop.Orders.AddNoteAsync(
+	orderId!,
+	"Matt's Test Note");
+
+var response = await api.Shop.Orders.AddPaymentAsync(
+	orderId,
+	new AddPaymentRequest
+	{
+		Amount = basket.Data.TotalCost.Value,
+		Status = "paid",
+		Processor = "partner",
+		ProcessorData = new ObjectDictionary
+		{
+			["order_ref"] = "123456",
+			["booking_ref"] = "B12345",
+			["commission_total"] = 10,
+			["commission_vat"] = 2,
+			["commission_vat_rule"] = "inc"
+		}
+	});
 
 Console.WriteLine(response);
 

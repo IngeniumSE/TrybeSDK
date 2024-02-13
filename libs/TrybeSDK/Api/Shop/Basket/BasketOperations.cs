@@ -1,8 +1,6 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
-using System.Threading;
-
 namespace TrybeSDK.Api;
 
 partial interface IShopOperations
@@ -38,6 +36,7 @@ public partial interface IBasketOperations
 
 	/// <summary>
 	/// Reserves the given basket.
+	/// HTTP POST /shop/basket/{basketId}/reserve
 	/// </summary>
 	/// <param name="basketId">The basket ID.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
@@ -47,7 +46,7 @@ public partial interface IBasketOperations
 		CancellationToken cancellationToken = default);
 }
 
-public partial class BasketOperations(PathString path, ApiClient client): IBasketOperations
+public partial class BasketOperations(PathString path, ApiClient client) : IBasketOperations
 {
 	public async Task<TrybeResponse<Basket>> GetBasketAsync(
 		string basketId,

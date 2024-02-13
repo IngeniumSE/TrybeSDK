@@ -31,6 +31,8 @@ static class JsonUtility
 			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 		};
 
+		options.Converters.Add(new ObjectDictionaryJsonConverter());
+
 		return options;
 	}
 }

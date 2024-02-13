@@ -12,12 +12,12 @@ public class BookableAreaSummary
 	/// </summary>
 	/// <value>The ID of the area.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; init; }
+	public required string Id { get; set; }
 
 	/// <summary>
 	/// The name of the area.
 	/// </summary>
 	/// <value>The name of the area.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; init; }
+	public required string Name { get; set; }
 }

@@ -19,5 +19,5 @@ public class RoomSummary
 	/// </summary>
 	/// <value>The name of the room.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; init; }
+	public required string Name { get; set; }
 }

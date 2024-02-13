@@ -15,26 +15,26 @@ public class BasketItemOptionBudget
 	/// </summary>
 	/// <value>The ID of the choice this option budget belongs to.</value>
 	[JsonPropertyName("choice_id")]
-	public required string ChoiceId { get; init; }
+	public required string ChoiceId { get; set; }
 
 	/// <summary>
 	/// The amount of the budget, in the smallest denomination.
 	/// </summary>
 	/// <value>The amount of the budget, in the smallest denomination.</value>
 	[JsonPropertyName("budget")]
-	public required string Budget { get; init; }
+	public required string Budget { get; set; }
 
 	/// <summary>
 	/// The amount spent towards the budget, in the smallest denomination.
 	/// </summary>
 	/// <value>The amount spent towards the budget, in the smallest denomination.</value>
 	[JsonPropertyName("spent")]
-	public string? Spent { get; init; }
+	public string? Spent { get; set; }
 
 	/// <summary>
 	/// The amount of the budget remaining to be spent, in the smallest denomination.
 	/// </summary>
 	/// <value>The amount of the budget remaining to be spent, in the smallest denomination.</value>
 	[JsonPropertyName("remaining")]
-	public string? Remaining { get; init; }
+	public string? Remaining { get; set; }
 }

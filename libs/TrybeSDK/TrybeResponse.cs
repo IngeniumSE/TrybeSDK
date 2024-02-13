@@ -166,22 +166,22 @@ public class Meta
 	/// <summary>
 	/// Gets the current page.
 	/// </summary>
-	public int Page { get; init; }
+	public int Page { get; set; }
 
 	/// <summary>
 	/// Gets the page size.
 	/// </summary>
-	public int PageSize { get; init; }
+	public int PageSize { get; set; }
 
 	/// <summary>
 	/// Gets or sets the total number of items.
 	/// </summary>
-	public int TotalItems { get; init; }
+	public int TotalItems { get; set; }
 
 	/// <summary>
 	/// Gets or sets the total number of pages.
 	/// </summary>
-	public int TotalPages { get; init; }
+	public int TotalPages { get; set; }
 }
 
 /// <summary>
@@ -192,10 +192,10 @@ public class RateLimiting
 	/// <summary>
 	/// Gets the remaining number of calls available.
 	/// </summary>
-	public int Remaining { get; init; }
+	public int Remaining { get; set; }
 
 	/// <summary>
 	/// Gets the limit of calls available.
 	/// </summary>
-	public int Limit { get; init; }
+	public int Limit { get; set; }
 }

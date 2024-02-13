@@ -15,7 +15,7 @@ public class Guest
 	/// </summary>
 	/// <value>The ID of the guest.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; init; }
+	public required string Id { get; set; }
 
 	/// <summary>
 	/// The guest's full name.

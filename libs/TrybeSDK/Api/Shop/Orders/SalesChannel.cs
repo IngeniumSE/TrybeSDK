@@ -5,26 +5,26 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OfferingSummary
+public class SalesChannel
 {
 	/// <summary>
-	/// The ID of the offering.
+	/// The ID of the sales channel.
 	/// </summary>
-	/// <value>The ID of the offering.</value>
+	/// <value>The ID of the sales channel.</value>
 	[JsonPropertyName("id")]
 	public required string Id { get; set; }
 
 	/// <summary>
-	/// The type of the offering.
+	/// The ID of the organisation the sales channel belongs to.
 	/// </summary>
-	/// <value>The type of the offering.</value>
-	[JsonPropertyName("type")]
-	public required string Type { get; set; }
+	/// <value>The ID of the organisation the sales channel belongs to.</value>
+	[JsonPropertyName("organisation_id")]
+	public string? OrganisationId { get; set; }
 
 	/// <summary>
-	/// The name of the offering.
+	/// The name of the sales channel.
 	/// </summary>
-	/// <value>The name of the offering.</value>
+	/// <value>The name of the sales channel.</value>
 	[JsonPropertyName("name")]
 	public required string Name { get; set; }
 }
