@@ -13,7 +13,16 @@ var settings = GetSettings();
 var http = CreateHttpClient();
 var api = new TrybeApiClient(http, settings);
 
-var response = await api.Shop.Packages.GetPackageAsync("6372bc492ea8f57d2508fe82");
+//var response = await api.Shop.Packages.GetPackageAsync("6372bc492ea8f57d2508fe82");
+var response = await api.Shop.ItemAvailability.GetOfferingDates(
+	new GetOfferingDatesRequest
+	{
+		OfferingType = "package",
+		OfferingId = "6372bc492ea8f57d2508fe82",
+		DateFrom = new(2024, 04, 01),
+		DateTo = new(2024, 04, 30),
+		Quantity = 1
+	});
 
 Console.WriteLine(response);
 
