@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A shop discount instance.
 /// </summary>
-public class ShopDiscount
+public class ShopDiscount : Model<ShopDiscount>
 {
 	/// <summary>
 	/// The ID of the discount.

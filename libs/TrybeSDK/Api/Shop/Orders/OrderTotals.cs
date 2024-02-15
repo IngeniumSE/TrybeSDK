@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderTotals
+public class OrderTotals : Model<OrderTotals>
 {
 	/// <summary>
 	/// The total cost of all items in the order. Item-level discounts are applied before this total is calculated.

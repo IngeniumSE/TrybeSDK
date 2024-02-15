@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class Package : ShopOffering
+public class Package : ShopOffering<Package>
 {
 	/// <summary>
 	/// A custom product code for the package.

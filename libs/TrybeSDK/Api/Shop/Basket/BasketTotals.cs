@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class BasketTotals
+public class BasketTotals : Model<BasketTotals>
 {
 	/// <summary>
 	/// The total cost of the basket before tax.

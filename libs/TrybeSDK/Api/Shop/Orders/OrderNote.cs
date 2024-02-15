@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderNote
+public class OrderNote : Model<OrderNote>
 {
 	/// <summary>
 	/// Gets or Sets Id

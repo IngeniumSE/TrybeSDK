@@ -1,15 +1,11 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
-using System.Net.Http.Json;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Xml;
 
 namespace TrybeSDK.Api;
 
-public class Visit
+public class Visit : Model<Visit>
 {
 	/// <summary>
 	/// The ID of the visit.

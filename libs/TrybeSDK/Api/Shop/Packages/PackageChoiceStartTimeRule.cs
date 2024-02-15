@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class PackageChoiceStartTimeRule
+public class PackageChoiceStartTimeRule : Model<PackageChoiceStartTimeRule>
 {
 	/// <summary>
 	/// The type of the rule.

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OfferingEmailOptions
+public class OfferingEmailOptions : Model<OfferingEmailOptions>
 {
 	/// <summary>
 	/// Enable to hide prices from customer emails, in cases where the customer didn't purchase the item directly.

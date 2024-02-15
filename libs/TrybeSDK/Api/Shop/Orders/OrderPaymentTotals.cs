@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderPaymentTotals
+public class OrderPaymentTotals : Model<OrderPaymentTotals>
 {
 	/// <summary>
 	/// The total of payments in a paid status.

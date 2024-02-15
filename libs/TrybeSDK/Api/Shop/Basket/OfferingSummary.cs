@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OfferingSummary
+public class OfferingSummary : Model<OfferingSummary>
 {
 	/// <summary>
 	/// The ID of the offering.

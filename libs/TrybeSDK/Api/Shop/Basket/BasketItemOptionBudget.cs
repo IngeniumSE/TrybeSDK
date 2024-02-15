@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A basket item option budget instance.
 /// </summary>
-public class BasketItemOptionBudget
+public class BasketItemOptionBudget : Model<BasketItemOptionBudget>
 {
 	/// <summary>
 	/// The ID of the choice this option budget belongs to.

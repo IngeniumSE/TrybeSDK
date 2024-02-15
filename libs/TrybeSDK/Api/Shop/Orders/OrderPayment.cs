@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderPayment : PaymentSummary
+public class OrderPayment : PaymentSummary<OrderPayment>
 {
 	/// <summary>
 	/// The amount of the payment that may be refunded.

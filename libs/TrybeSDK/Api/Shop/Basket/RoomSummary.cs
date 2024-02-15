@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class RoomSummary
+public class RoomSummary : Model<RoomSummary>
 {
 	/// <summary>
 	/// The ID of the room.

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderDiscount
+public class OrderDiscount : Model<OrderDiscount>
 {
 	/// <summary>
 	/// The ID of the order discount

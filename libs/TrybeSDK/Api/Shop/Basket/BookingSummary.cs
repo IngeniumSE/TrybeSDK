@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class BookingSummary
+public class BookingSummary : Model<BookingSummary>
 {
 	/// <summary>
 	/// Gets or Sets Id

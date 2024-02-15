@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class PractitionerSummary
+public class PractitionerSummary : Model<PractitionerSummary>
 {
 	/// <summary>
 	/// The ID of the practitioner.
