@@ -87,7 +87,8 @@ public static class ServiceCollectionExtensions
 			return settings;
 		});
 
-		services.AddScoped<ITrybeClientFactory, TrybeClientFactory>();
+		services.AddScoped<ITrybeHttpClientFactory, TrybeHttpClientFactory>();
+		services.AddScoped<ITrybeApiClientFactory, TrybeApiClientFactory>();
 		AddApiClient(
 			services,
 			TrybeApiConstants.DefaultTrybeApiClient,
@@ -95,13 +96,13 @@ public static class ServiceCollectionExtensions
 		AddApiClient(
 			services,
 			TrybeApiConstants.DefaultTrybeShopClient,
-			(cf, settings) => cf.CreateShopClient(settings, TrybeApiConstants.DefaultTrybeShopClient));
+			(cf, settings) => cf.CreateFrontendClient(settings, TrybeApiConstants.DefaultTrybeShopClient));
 	}
 
 	static void AddApiClient<TClient>(
 		IServiceCollection services,
 		string name,
-		Func<ITrybeClientFactory, TrybeSettings, TClient> factory)
+		Func<ITrybeApiClientFactory, TrybeSettings, TClient> factory)
 		where TClient : class
 	{
 		void ConfigureHttpDefaults(HttpClient http)
@@ -114,7 +115,7 @@ public static class ServiceCollectionExtensions
 		services.AddScoped(sp =>
 		{
 			var settings = sp.GetRequiredService<TrybeSettings>();
-			var clientFactory = sp.GetRequiredService<ITrybeClientFactory>();
+			var clientFactory = sp.GetRequiredService<ITrybeApiClientFactory>();
 
 			return factory(clientFactory, settings);
 		});
