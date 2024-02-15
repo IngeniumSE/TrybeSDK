@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class PackagePriceRule
+public class PackagePriceRule : Model<PackagePriceRule>
 {
 	/// <summary>
 	/// The ID of the price rule.

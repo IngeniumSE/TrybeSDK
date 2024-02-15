@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class BookableAreaSummary
+public class BookableAreaSummary : Model<BookableAreaSummary>
 {
 	/// <summary>
 	/// The ID of the area.

@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace TrybeSDK.Api;
 
 [DebuggerDisplay("{Name,nq} ({Id,nq})")]
-public class PackageItemChoice
+public class PackageItemChoice : Model<PackageItemChoice>
 {
 	/// <summary>
 	/// The ID of this choice.

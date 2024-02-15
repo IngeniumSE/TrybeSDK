@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace TrybeSDK.Api;
 
-public class BookingOrderItem
+public class BookingOrderItem : Model<BookingOrderItem>
 {
 	/// <summary>
 	/// Gets or Sets Id

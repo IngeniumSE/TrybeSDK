@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class BasketPromoCodeSummary
+public class BasketPromoCodeSummary : Model<BasketPromoCodeSummary>
 {
 	/// <summary>
 	/// The ID of the applied promo code.

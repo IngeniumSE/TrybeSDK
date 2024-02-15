@@ -7,7 +7,11 @@ using System.Text.Json.Serialization;
 namespace TrybeSDK.Api;
 
 [DebuggerDisplay("{ToDebuggerString(),nq}")]
-public class ShopOffering
+public class ShopOffering : ShopOffering<ShopOffering> { }
+
+[DebuggerDisplay("{ToDebuggerString(),nq}")]
+public class ShopOffering<T> : Model<T>
+	where T : ShopOffering<T>
 {
 	/// <summary>
 	/// The ID of the offering

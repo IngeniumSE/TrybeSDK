@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OfferingIdentifier
+public class OfferingIdentifier : Model<OfferingIdentifier>
 {
 	/// <summary>
 	/// The type of the offering.

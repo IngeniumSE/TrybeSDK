@@ -5,14 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class AppointmentTypeMeta
+public class AppointmentTypeMeta : Model<AppointmentTypeMeta>
 {
 	/// <summary>
 	/// The meta title of this offering. If not specified, it falls back to the name of the offering.
 	/// </summary>
 	/// <value>The meta title of this offering. If not specified, it falls back to the name of the offering.</value>	
 	[JsonPropertyName("title")]
-	public required string Title { get; set; }
+	public string? Title { get; set; }
 
 	/// <summary>
 	/// The meta description of this offering. If not specified, it falls back to the description of the offering.

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class EquipmentSummary
+public class EquipmentSummary : Model<EquipmentSummary>
 {
 	/// <summary>
 	/// The ID of the equipment.

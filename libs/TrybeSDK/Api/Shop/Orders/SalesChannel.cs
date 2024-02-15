@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class SalesChannel
+public class SalesChannel : Model<SalesChannel>
 {
 	/// <summary>
 	/// The ID of the sales channel.

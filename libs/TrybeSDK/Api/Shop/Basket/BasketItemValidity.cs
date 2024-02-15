@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A basket item validity instance.
 /// </summary>
-public class BasketItemValidity
+public class BasketItemValidity : Model<BasketItemValidity>
 {
 	/// <summary>
 	/// Whether the given basket item is valid.
@@ -28,7 +28,7 @@ public class BasketItemValidity
 /// <summary>
 /// A basket item validity error instance.
 /// </summary>
-public class BasketItemValidityErrors
+public class BasketItemValidityErrors : Model<BasketItemValidityErrors>
 {
 	/// <summary>
 	/// A friendly description of the error.

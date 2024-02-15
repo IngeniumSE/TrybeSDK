@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A guest instance.
 /// </summary>
-public class Guest
+public class Guest : Model<Guest>
 {
 	/// <summary>
 	/// The ID of the guest.

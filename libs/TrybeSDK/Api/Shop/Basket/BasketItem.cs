@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A basket item instance.
 /// </summary>
-public class BasketItem
+public class BasketItem : Model<BasketItem>
 {
 	/// <summary>
 	/// A unique ID for the basket item

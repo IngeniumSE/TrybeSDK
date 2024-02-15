@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class AvailabilityRule
+public class AvailabilityRule : Model<AvailabilityRule>
 {
 	/// <summary>
 	/// The ID of the availability rule.

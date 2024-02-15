@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderLabel
+public class OrderLabel : Model<OrderLabel>
 {
 	/// <summary>
 	/// The ID of the label.

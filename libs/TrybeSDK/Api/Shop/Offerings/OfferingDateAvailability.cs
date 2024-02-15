@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace TrybeSDK.Api;
 
 [DebuggerDisplay("{ToDebuggerString(),nq}")]
-public class OfferingDateAvailability
+public class OfferingDateAvailability : Model<OfferingDateAvailability>
 {
 	/// <summary>
 	/// The date availability is for.

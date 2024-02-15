@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class PackageOrderItem
+public class PackageOrderItem : Model<PackageOrderItem>
 {
 	/// <summary>
 	/// Gets or Sets Id

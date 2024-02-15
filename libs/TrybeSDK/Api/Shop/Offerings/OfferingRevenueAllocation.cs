@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OfferingRevenueAllocation
+public class OfferingRevenueAllocation : Model<OfferingRevenueAllocation>
 {
 	/// <summary>
 	/// The identifier of the revenue centre.

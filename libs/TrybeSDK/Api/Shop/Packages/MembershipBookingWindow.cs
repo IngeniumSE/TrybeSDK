@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class MembershipBookingWindow
+public class MembershipBookingWindow : Model<MembershipBookingWindow>
 {
 	/// <summary>
 	/// The ID of the membership type this booking window applies to.

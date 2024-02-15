@@ -11,7 +11,7 @@ namespace TrybeSDK.Frontend;
 /// <summary>
 /// A booking frame object.
 /// </summary>
-public class BookingFrame
+public class BookingFrame : Model<BookingFrame>
 {
 	[JsonPropertyName("basket")]
 	public Basket? Basket { get; set; }

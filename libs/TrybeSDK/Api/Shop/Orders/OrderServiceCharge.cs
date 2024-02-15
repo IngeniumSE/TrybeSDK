@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class OrderServiceCharge
+public class OrderServiceCharge : Model<OrderServiceCharge>
 {
 	/// <summary>
 	/// The amount of the service charge, in minor units.

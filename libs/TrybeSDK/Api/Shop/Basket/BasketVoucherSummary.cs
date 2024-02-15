@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class BasketVoucherSummary
+public class BasketVoucherSummary : Model<BasketVoucherSummary>
 {
 	/// <summary>
 	/// The ID of the voucher.

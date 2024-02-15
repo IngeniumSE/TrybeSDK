@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class Customer
+public class Customer : Model<Customer>
 {
 	/// <summary>
 	/// The ID of the customer.

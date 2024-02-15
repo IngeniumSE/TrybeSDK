@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class Order
+public class Order : Model<Order>
 {
 	/// <summary>
 	/// The ID of the basket this order represents.

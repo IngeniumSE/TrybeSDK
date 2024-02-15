@@ -5,7 +5,10 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class PaymentSummary
+public class PaymentSummary : PaymentSummary<PaymentSummary> { }
+
+public class PaymentSummary<T> : Model<T>
+	where T : PaymentSummary<T>
 {
 	/// <summary>
 	/// The ID of the item to be added.

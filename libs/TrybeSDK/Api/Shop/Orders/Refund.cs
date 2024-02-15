@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace TrybeSDK.Api;
 
-public class Refund
+public class Refund : Model<Refund>
 {
 	/// <summary>
 	/// The ID of the refund.

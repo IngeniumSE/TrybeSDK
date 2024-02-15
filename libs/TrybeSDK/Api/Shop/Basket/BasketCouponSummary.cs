@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A basket coupon summary instance.
 /// </summary>
-public class BasketCouponSummary
+public class BasketCouponSummary : Model<BasketCouponSummary>
 {
 	/// <summary>
 	/// The ID of the coupon.

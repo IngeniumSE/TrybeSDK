@@ -8,7 +8,7 @@ namespace TrybeSDK.Api;
 /// <summary>
 /// A site object.
 /// </summary>
-public class Site
+public class Site : Model<Site>
 {
 	/// <summary>
 	/// The date and time the site was created.

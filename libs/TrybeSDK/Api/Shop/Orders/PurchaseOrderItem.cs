@@ -1,15 +1,11 @@
 // This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Text;
-using System.Xml;
 
 namespace TrybeSDK.Api;
 
-public class PurchaseOrderItem
+public class PurchaseOrderItem : Model<PurchaseOrderItem>
 {
 	/// <summary>
 	/// Gets or Sets Id
@@ -117,7 +113,7 @@ public class PurchaseOrderItem
 	/// The date and time the booking was created.
 	/// </summary>
 	/// <value>The date and time the booking was created.</value>
-	
+
 	[JsonPropertyName("created_at")]
 	public DateTime? CreatedAt { get; set; }
 
@@ -125,21 +121,21 @@ public class PurchaseOrderItem
 	/// The date and time the booking was last updated.
 	/// </summary>
 	/// <value>The date and time the booking was last updated.</value>
-	
+
 	[JsonPropertyName("updated_at")]
 	public DateTime? UpdatedAt { get; set; }
 
 	/// <summary>
 	/// Gets or Sets ItemConfiguration
 	/// </summary>
-	
+
 	[JsonPropertyName("item_configuration")]
 	public ObjectDictionary? ItemConfiguration { get; set; }
 
 	/// <summary>
 	/// Gets or Sets PurchasableDetails
 	/// </summary>
-	
+
 	[JsonPropertyName("purchasable_details")]
 	public ObjectDictionary? PurchasableDetails { get; set; }
 
