@@ -17,7 +17,7 @@ public abstract class Model<T>
 	/// </summary>
 	/// <param name="json">The JSON string.</param>
 	/// <returns>The model instance.</returns>
-	public T? FromJsonString(string json)
+	public static T? FromJsonString(string json)
 	{
 		Ensure.IsNotNullOrEmpty(json, nameof(json));
 
