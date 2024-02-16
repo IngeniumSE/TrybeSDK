@@ -46,6 +46,7 @@ public class BookingFrameOperations(PathString path, ApiClient client) : IBookin
 			HttpMethod.Post, path + "/create", frameRequest);
 
 		return await client.FetchAsync<CreateBookingFrameRequest, BookingFrame>(
-			request, cancellationToken);
+			request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }

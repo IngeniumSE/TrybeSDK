@@ -76,7 +76,8 @@ partial class BasketOperations
 
 		var request = new TrybeRequest<AddBasketItemRequest>(HttpMethod.Post, path + $"/{basketId}/items", itemRequest);
 
-		return await client.FetchAsync<AddBasketItemRequest, Basket>(request, cancellationToken);
+		return await client.FetchAsync<AddBasketItemRequest, Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Basket>> DeleteBasketItemAsync(
@@ -89,7 +90,8 @@ partial class BasketOperations
 
 		var request = new TrybeRequest(HttpMethod.Delete, path + $"/{basketId}/items/{basketItemId}");
 
-		return await client.FetchAsync<Basket>(request, cancellationToken);
+		return await client.FetchAsync<Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Basket>> UpdateBasketItemAsync(
@@ -104,7 +106,8 @@ partial class BasketOperations
 
 		var request = new TrybeRequest<UpdateBasketItemRequest>(HttpMethod.Put, path + $"/{basketId}/items/{basketItemId}", itemRequest);
 
-		return await client.FetchAsync<UpdateBasketItemRequest, Basket>(request, cancellationToken);
+		return await client.FetchAsync<UpdateBasketItemRequest, Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Basket>> UpdateBasketGuestsAsync(
@@ -117,7 +120,8 @@ partial class BasketOperations
 
 		var request = new TrybeRequest<UpdateBasketGuestsRequest>(HttpMethod.Post, path + $"/{basketId}/update-guests", guestsRequest);
 
-		return await client.FetchAsync<UpdateBasketGuestsRequest, Basket>(request, cancellationToken);
+		return await client.FetchAsync<UpdateBasketGuestsRequest, Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }
 

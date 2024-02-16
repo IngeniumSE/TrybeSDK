@@ -25,7 +25,8 @@ partial class OrderOperations
 
 		var request = new TrybeRequest<AddPaymentRequest>(HttpMethod.Post, path + $"/{orderId}/payments", paymentRequest);
 
-		return await client.FetchAsync<AddPaymentRequest, OrderPayment>(request, cancellationToken);
+		return await client.FetchAsync<AddPaymentRequest, OrderPayment>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }
 

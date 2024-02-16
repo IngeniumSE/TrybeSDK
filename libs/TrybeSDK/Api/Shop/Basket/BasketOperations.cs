@@ -56,7 +56,8 @@ public partial class BasketOperations(PathString path, ApiClient client) : IBask
 
 		var request = new TrybeRequest(HttpMethod.Get, path + $"/{basketId}");
 
-		return await client.FetchAsync<Basket>(request, cancellationToken);
+		return await client.FetchAsync<Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Basket>> ReserveBasketAsync(
@@ -67,6 +68,7 @@ public partial class BasketOperations(PathString path, ApiClient client) : IBask
 
 		var request = new TrybeRequest(HttpMethod.Post, path + $"/{basketId}/reserve");
 
-		return await client.FetchAsync<Basket>(request, cancellationToken);
+		return await client.FetchAsync<Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }

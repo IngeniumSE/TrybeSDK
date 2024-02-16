@@ -34,6 +34,7 @@ partial class BasketOperations
 
 		var request = new TrybeRequest<Customer>(HttpMethod.Post, path + $"/{basketId}/customer", customer);
 
-		return await client.FetchAsync<Customer, Basket>(request, cancellationToken);
+		return await client.FetchAsync<Customer, Basket>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }

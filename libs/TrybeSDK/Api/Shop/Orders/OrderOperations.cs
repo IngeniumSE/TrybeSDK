@@ -42,6 +42,7 @@ public partial class OrderOperations(PathString path, ApiClient client) : IOrder
 
 		var request = new TrybeRequest(HttpMethod.Post, path + $"/{orderId}/submit");
 
-		return await client.FetchAsync<Order>(request, cancellationToken);
+		return await client.FetchAsync<Order>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }
