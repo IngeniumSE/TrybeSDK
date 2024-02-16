@@ -34,10 +34,11 @@ public abstract class ApiClient
 	{
 		Ensure.IsNotNull(request, nameof(request));
 		var httpReq = CreateHttpRequest(request);
+		HttpResponseMessage? httpResp = null;
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken)
+			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse(
@@ -62,12 +63,26 @@ public abstract class ApiClient
 		}
 		catch (Exception ex)
 		{
-			return new TrybeResponse(
+			var response = new TrybeResponse(
 				httpReq.Method,
 				httpReq.RequestUri,
 				false,
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
+
+			if (httpReq?.Content is not null)
+			{
+				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
+			}
+
+			if (httpResp?.Content is not null)
+			{
+				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false); ;
+			}
+
+			return response;
 		}
 	}
 
@@ -78,10 +93,11 @@ public abstract class ApiClient
 	{
 		Ensure.IsNotNull(request, nameof(request));
 		var httpReq = CreateHttpRequest(request);
+		HttpResponseMessage? httpResp = null;
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
+			httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
 			var transformedResponse = await TransformResponse(
 				httpReq.Method,
@@ -105,12 +121,26 @@ public abstract class ApiClient
 		}
 		catch (Exception ex)
 		{
-			return new TrybeResponse(
+			var response = new TrybeResponse(
 				httpReq.Method,
 				httpReq.RequestUri,
 				false,
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
+
+			if (httpReq?.Content is not null)
+			{
+				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
+			}
+
+			if (httpResp?.Content is not null)
+			{
+				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false); ;
+			}
+
+			return response;
 		}
 	}
 
@@ -121,10 +151,11 @@ public abstract class ApiClient
 	{
 		Ensure.IsNotNull(request, nameof(request));
 		var httpReq = CreateHttpRequest(request);
+		HttpResponseMessage? httpResp = null;
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken)
+			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse<TResponse>(
@@ -149,12 +180,26 @@ public abstract class ApiClient
 		}
 		catch (Exception ex)
 		{
-			return new TrybeResponse<TResponse>(
+			var response = new TrybeResponse<TResponse>(
 				httpReq.Method,
 				httpReq.RequestUri,
 				false,
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
+
+			if (httpReq?.Content is not null)
+			{
+				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
+			}
+
+			if (httpResp?.Content is not null)
+			{
+				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false); ;
+			}
+
+			return response;
 		}
 	}
 
@@ -166,10 +211,11 @@ public abstract class ApiClient
 	{
 		Ensure.IsNotNull(request, nameof(request));
 		var httpReq = CreateHttpRequest(request);
+		HttpResponseMessage? httpResp = null;
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken)
+			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse<TResponse>(
@@ -194,12 +240,26 @@ public abstract class ApiClient
 		}
 		catch (Exception ex)
 		{
-			return new TrybeResponse<TResponse>(
+			var response = new TrybeResponse<TResponse>(
 				httpReq.Method,
 				httpReq.RequestUri,
 				false,
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
+
+			if (httpReq?.Content is not null)
+			{
+				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
+			}
+
+			if (httpResp?.Content is not null)
+			{
+				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false); ;
+			}
+
+			return response;
 		}
 	}
 	#endregion
