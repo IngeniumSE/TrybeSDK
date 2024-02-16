@@ -15,7 +15,7 @@ public class BasketCouponSummary : Model<BasketCouponSummary>
 	/// </summary>
 	/// <value>The ID of the coupon.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The code of the coupon.

@@ -30,7 +30,7 @@ if (response.IsSuccess && response.HasData)
 
 	string packageJson = package.ToJsonString();
 
-	var package2 = package.FromJsonString(packageJson);
+	var package2 = Package.FromJsonString(packageJson);
 }
 
 Console.WriteLine(response);

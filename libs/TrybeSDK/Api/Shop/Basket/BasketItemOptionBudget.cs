@@ -15,14 +15,14 @@ public class BasketItemOptionBudget : Model<BasketItemOptionBudget>
 	/// </summary>
 	/// <value>The ID of the choice this option budget belongs to.</value>
 	[JsonPropertyName("choice_id")]
-	public required string ChoiceId { get; set; }
+	public string ChoiceId { get; set; }
 
 	/// <summary>
 	/// The amount of the budget, in the smallest denomination.
 	/// </summary>
 	/// <value>The amount of the budget, in the smallest denomination.</value>
 	[JsonPropertyName("budget")]
-	public required string Budget { get; set; }
+	public string Budget { get; set; }
 
 	/// <summary>
 	/// The amount spent towards the budget, in the smallest denomination.

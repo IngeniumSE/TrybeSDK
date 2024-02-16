@@ -35,7 +35,7 @@ public class AddPaymentRequest
 	/// Gets the payment amount.
 	/// </summary>
 	[JsonPropertyName("amount")]
-	public required int Amount { get; set; }
+	public int Amount { get; set; }
 
 	/// <summary>
 	/// Gets the capture method
@@ -53,7 +53,7 @@ public class AddPaymentRequest
 	/// Gets the processor.
 	/// </summary>
 	[JsonPropertyName("processor")]
-	public required string Processor { get; set; }
+	public string Processor { get; set; }
 
 	/// <summary>
 	/// Gets the processor data.

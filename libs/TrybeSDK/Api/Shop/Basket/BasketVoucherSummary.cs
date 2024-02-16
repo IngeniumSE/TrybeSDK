@@ -12,14 +12,14 @@ public class BasketVoucherSummary : Model<BasketVoucherSummary>
 	/// </summary>
 	/// <value>The ID of the voucher.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The code of the voucher.
 	/// </summary>
 	/// <value>The code of the voucher.</value>
 	[JsonPropertyName("code")]
-	public required string Code { get; set; }
+	public string Code { get; set; }
 
 	/// <summary>
 	/// The ID of the voucher type this voucher was created from

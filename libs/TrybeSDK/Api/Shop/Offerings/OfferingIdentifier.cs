@@ -12,14 +12,14 @@ public class OfferingIdentifier : Model<OfferingIdentifier>
 	/// </summary>
 	/// <value>The type of the offering.</value>	
 	[JsonPropertyName("offering_type")]
-	public required string OfferingType { get; set; }
+	public string OfferingType { get; set; }
 
 	/// <summary>
 	/// The ID of the offering.
 	/// </summary>
 	/// <value>The ID of the offering.</value>	
 	[JsonPropertyName("offering_id")]
-	public required string OfferingId { get; set; }
+	public string OfferingId { get; set; }
 
 	/// <summary>
 	/// The name of the offering.

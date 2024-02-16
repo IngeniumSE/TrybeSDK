@@ -14,14 +14,14 @@ public class OfferingDateAvailability : Model<OfferingDateAvailability>
 	/// </summary>
 	/// <value>The date availability is for.</value>	
 	[JsonPropertyName("date")]
-	public required DateTime Date { get; set; }
+	public DateTime Date { get; set; }
 
 	/// <summary>
 	/// Whether there is availability for the offering on this date.
 	/// </summary>
 	/// <value>Whether there is availability for the offering on this date.</value>	
 	[JsonPropertyName("has_availability")]
-	public required bool HasAvailability { get; set; }
+	public bool HasAvailability { get; set; }
 
 	public string ToDebuggerString()
 		=> $"{Date:yyyy-MM-dd}: ({(HasAvailability ? "available" : "unavailable")})";

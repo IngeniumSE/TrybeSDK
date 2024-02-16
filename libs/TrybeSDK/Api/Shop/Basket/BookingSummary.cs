@@ -11,7 +11,7 @@ public class BookingSummary : Model<BookingSummary>
 	/// Gets or Sets Id
 	/// </summary>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The date and time the booking starts.

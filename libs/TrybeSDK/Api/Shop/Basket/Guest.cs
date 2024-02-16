@@ -15,14 +15,14 @@ public class Guest : Model<Guest>
 	/// </summary>
 	/// <value>The ID of the guest.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The guest's full name.
 	/// </summary>
 	/// <value>The guest's full name.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 
 	/// <summary>
 	/// Whether this guest is the lead booker

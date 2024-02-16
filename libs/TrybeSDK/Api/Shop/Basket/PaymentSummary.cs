@@ -15,7 +15,7 @@ public class PaymentSummary<T> : Model<T>
 	/// </summary>
 	/// <value>The ID of the item to be added.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The payment processor to be used for the payment

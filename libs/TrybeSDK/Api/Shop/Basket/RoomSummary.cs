@@ -12,12 +12,12 @@ public class RoomSummary : Model<RoomSummary>
 	/// </summary>
 	/// <value>The ID of the room.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The name of the room.
 	/// </summary>
 	/// <value>The name of the room.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 }

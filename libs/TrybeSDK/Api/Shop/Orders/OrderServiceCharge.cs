@@ -36,7 +36,7 @@ public class OrderItemServiceCharge
 	/// <value>The ID of the basket item.</value>
 
 	[JsonPropertyName("item_id")]
-	public required string ItemId { get; set; }
+	public string ItemId { get; set; }
 
 	/// <summary>
 	/// The amount of the service charge, in minor units.

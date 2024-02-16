@@ -12,19 +12,19 @@ public class OfferingSummary : Model<OfferingSummary>
 	/// </summary>
 	/// <value>The ID of the offering.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The type of the offering.
 	/// </summary>
 	/// <value>The type of the offering.</value>
 	[JsonPropertyName("type")]
-	public required string Type { get; set; }
+	public string Type { get; set; }
 
 	/// <summary>
 	/// The name of the offering.
 	/// </summary>
 	/// <value>The name of the offering.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 }

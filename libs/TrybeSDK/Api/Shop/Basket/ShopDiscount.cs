@@ -15,28 +15,28 @@ public class ShopDiscount : Model<ShopDiscount>
 	/// </summary>
 	/// <value>The ID of the discount.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// A name associated with the discount.
 	/// </summary>
 	/// <value>A name associated with the discount.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 
 	/// <summary>
 	/// The type of the discount amount.
 	/// </summary>
 	/// <value>The type of the discount amount.</value>
 	[JsonPropertyName("amount_type")]
-	public required string AmountType { get; set; }
+	public string AmountType { get; set; }
 
 	/// <summary>
 	/// A calculated amount of the discount.
 	/// </summary>
 	/// <value>A calculated amount of the discount.</value>
 	[JsonPropertyName("calculated_amount")]
-	public required int CalculatedAmount { get; set; }
+	public int CalculatedAmount { get; set; }
 
 	/// <summary>
 	/// The ID of the coupon code that applied the discount, if applicable.

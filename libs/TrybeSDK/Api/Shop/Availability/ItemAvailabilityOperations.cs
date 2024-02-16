@@ -52,17 +52,17 @@ public class ItemAvailabilityOperations(PathString path, ApiClient client) : IIt
 public class GetOfferingDatesRequest
 {
 	[JsonPropertyName("offering_type")]
-	public required string OfferingType { get; set; }
+	public string OfferingType { get; set; }
 
 	[JsonPropertyName("offering_id")]
-	public required string OfferingId { get; set; }
+	public string OfferingId { get; set; }
 
 	[JsonPropertyName("date_from")]
-	public required DateTime DateFrom { get; set; }
+	public DateTime DateFrom { get; set; }
 
 	[JsonPropertyName("date_to")]
-	public required DateTime DateTo { get; set; }
+	public DateTime DateTo { get; set; }
 
 	[JsonPropertyName("quantity")]
-	public required int Quantity { get; set; }
+	public int Quantity { get; set; }
 }

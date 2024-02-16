@@ -14,7 +14,7 @@ public class ShopOfferingCategories : Model<ShopOfferingCategories>
 	/// </summary>
 	/// <value>The ID of the category</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The name of the category

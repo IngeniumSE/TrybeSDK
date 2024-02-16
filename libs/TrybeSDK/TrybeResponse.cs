@@ -145,12 +145,18 @@ public class TrybeResponse<TData>(
 /// </summary>
 /// <param name="message">The error message.</param>
 /// <param name="errors">The set of additional error messages, these may be field specific.</param>
-public class Error(string message, Dictionary<string, string[]>? errors = null)
+/// <param name="exception">The exception that was caught.</param>
+public class Error(string message, Dictionary<string, string[]>? errors = null, Exception? exception = null)
 {
 	/// <summary>
 	/// Gets the set of additional error messages, these may be field specific.
 	/// </summary>
 	public Dictionary<string, string[]>? Errors => errors;
+
+	/// <summary>
+	/// Gets the exception that was caught.
+	/// </summary>
+	public Exception? Exception => exception;
 
 	/// <summary>
 	/// Gets the error message.

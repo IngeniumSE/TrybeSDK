@@ -15,21 +15,21 @@ public class Basket : Model<Basket>
 	/// </summary>
 	/// <value>The ID of the basket.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The order reference of the completed basket.
 	/// </summary>
 	/// <value>The order reference of the completed basket.</value>
 	[JsonPropertyName("order_ref")]
-	public required string OrderRef { get; set; }
+	public string OrderRef { get; set; }
 
 	/// <summary>
 	/// The status of the basket (e.g. in progress or complete)
 	/// </summary>
 	/// <value>The status of the basket (e.g. in progress or complete)</value>
 	[JsonPropertyName("status")]
-	public required string Status { get; set; }
+	public string Status { get; set; }
 
 	/// <summary>
 	/// The ID of the organisation owning the items to be added to the basket.

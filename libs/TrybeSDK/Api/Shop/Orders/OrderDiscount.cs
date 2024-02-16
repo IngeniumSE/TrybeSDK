@@ -12,7 +12,7 @@ public class OrderDiscount : Model<OrderDiscount>
 	/// </summary>
 	/// <value>The ID of the order discount</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The type of the amount this discount describes.

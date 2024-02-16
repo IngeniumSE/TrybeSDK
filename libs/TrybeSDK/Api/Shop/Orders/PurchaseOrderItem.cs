@@ -11,7 +11,7 @@ public class PurchaseOrderItem : Model<PurchaseOrderItem>
 	/// Gets or Sets Id
 	/// </summary>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The type of item (purchasable) this order item is for.

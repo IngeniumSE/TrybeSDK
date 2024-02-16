@@ -15,7 +15,7 @@ public class BasketItemValidity : Model<BasketItemValidity>
 	/// </summary>
 	/// <value>Whether the given basket item is valid.</value>
 	[JsonPropertyName("valid")]
-	public required bool? Valid { get; set; }
+	public bool? Valid { get; set; }
 
 	/// <summary>
 	/// The array of error messages.
@@ -35,5 +35,5 @@ public class BasketItemValidityErrors : Model<BasketItemValidityErrors>
 	/// </summary>
 	/// <value>A friendly description of the error.</value>
 	[JsonPropertyName("message")]
-	public required string Message { get; set; }
+	public string Message { get; set; }
 }

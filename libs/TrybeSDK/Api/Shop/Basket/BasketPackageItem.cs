@@ -15,7 +15,7 @@ public class BasketPackageItem : Model<BasketPackageItem>
 	/// </summary>
 	/// <value>A unique ID for the basket package item</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The ID of the package choice this item relates to.
@@ -36,7 +36,7 @@ public class BasketPackageItem : Model<BasketPackageItem>
 	/// </summary>
 	/// <value>The type of offering this item represents.</value>
 	[JsonPropertyName("offering_type")]
-	public required string? OfferingType { get; set; }
+	public string? OfferingType { get; set; }
 
 	/// <summary>
 	/// The ID of the offering this item represents.
