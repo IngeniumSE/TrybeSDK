@@ -12,7 +12,7 @@ public class Visit : Model<Visit>
 	/// </summary>
 	/// <value>The ID of the visit.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The reference code of the visit.
@@ -105,12 +105,12 @@ public class VisitType
 	/// </summary>
 	/// <value>The ID of the visit type.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The name of the visit type.
 	/// </summary>
 	/// <value>The name of the visit type.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 }

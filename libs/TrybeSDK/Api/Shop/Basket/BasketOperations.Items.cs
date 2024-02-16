@@ -154,13 +154,13 @@ public class AddBasketItemRequest
 	/// The ID of the offering.
 	/// </summary>
 	[JsonPropertyName("offering_id")]
-	public required string OfferingId { get; set; }
+	public string OfferingId { get; set; }
 
 	/// <summary>
 	/// The type of item being added.
 	/// </summary>
 	[JsonPropertyName("offering_type")]
-	public required string OfferingType { get; set; }
+	public string OfferingType { get; set; }
 
 	/// <summary>
 	/// The overriden price, if applicable.
@@ -238,5 +238,5 @@ public class UpdateBasketGuestsRequest
 	/// The set of guests for the basket.
 	/// </summary>
 	[JsonPropertyName("guests")]
-	public required GuestList Guests { get; set; }
+	public GuestList Guests { get; set; }
 }

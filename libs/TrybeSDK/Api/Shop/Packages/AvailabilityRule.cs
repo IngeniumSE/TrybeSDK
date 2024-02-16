@@ -12,7 +12,7 @@ public class AvailabilityRule : Model<AvailabilityRule>
 	/// </summary>
 	/// <value>The ID of the availability rule.</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The start of the rule period.

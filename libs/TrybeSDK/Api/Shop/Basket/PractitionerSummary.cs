@@ -12,12 +12,12 @@ public class PractitionerSummary : Model<PractitionerSummary>
 	/// </summary>
 	/// <value>The ID of the practitioner.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The full name of the practitioner.
 	/// </summary>
 	/// <value>The full name of the practitioner.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 }

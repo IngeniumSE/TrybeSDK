@@ -12,14 +12,14 @@ public class OrderLabel : Model<OrderLabel>
 	/// </summary>
 	/// <value>The ID of the label.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The name of this label.
 	/// </summary>
 	/// <value>The name of this label.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 
 	/// <summary>
 	/// A hex code for the label.

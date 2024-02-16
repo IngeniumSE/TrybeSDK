@@ -12,7 +12,7 @@ public class BasketPromoCodeSummary : Model<BasketPromoCodeSummary>
 	/// </summary>
 	/// <value>The ID of the applied promo code.</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The code of the applied promo code.

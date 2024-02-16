@@ -12,7 +12,7 @@ public class SalesChannel : Model<SalesChannel>
 	/// </summary>
 	/// <value>The ID of the sales channel.</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The ID of the organisation the sales channel belongs to.
@@ -26,5 +26,5 @@ public class SalesChannel : Model<SalesChannel>
 	/// </summary>
 	/// <value>The name of the sales channel.</value>
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 }

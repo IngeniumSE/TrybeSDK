@@ -14,14 +14,14 @@ public class PackageItemChoice : Model<PackageItemChoice>
 	/// </summary>
 	/// <value>The ID of this choice.</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// A name for this choice.
 	/// </summary>
 	/// <value>A name for this choice.</value>	
 	[JsonPropertyName("name")]
-	public required string Name { get; set; }
+	public string Name { get; set; }
 
 	/// <summary>
 	/// A description of this choice.

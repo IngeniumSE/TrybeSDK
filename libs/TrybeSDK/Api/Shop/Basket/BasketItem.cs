@@ -15,7 +15,7 @@ public class BasketItem : Model<BasketItem>
 	/// </summary>
 	/// <value>A unique ID for the basket item</value>
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The type of offering the item represents.

@@ -12,14 +12,14 @@ public class Refund : Model<Refund>
 	/// </summary>
 	/// <value>The ID of the refund.</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The ID of the payment that was refunded.
 	/// </summary>
 	/// <value>The ID of the payment that was refunded.</value>	
 	[JsonPropertyName("payment_id")]
-	public required string PaymentId { get; set; }
+	public string PaymentId { get; set; }
 
 	/// <summary>
 	/// The amount of the refund.

@@ -12,14 +12,14 @@ public class PackagePriceRule : Model<PackagePriceRule>
 	/// </summary>
 	/// <value>The ID of the price rule.</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The ID of the package the price rule relates to.
 	/// </summary>
 	/// <value>The ID of the package the price rule relates to.</value>	
 	[JsonPropertyName("package_id")]
-	public required string PackageId { get; set; }
+	public string PackageId { get; set; }
 
 	/// <summary>
 	/// The rule should apply to packages starting on or after this date.

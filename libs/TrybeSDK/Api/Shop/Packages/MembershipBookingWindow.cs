@@ -12,7 +12,7 @@ public class MembershipBookingWindow : Model<MembershipBookingWindow>
 	/// </summary>
 	/// <value>The ID of the membership type this booking window applies to.</value>	
 	[JsonPropertyName("membership_type_id")]
-	public required string MembershipTypeId { get; set; }
+	public string MembershipTypeId { get; set; }
 
 	/// <summary>
 	/// The maximum time before a booking's start time that it may be booked, as an ISO8601 string. See https://en.wikipedia.org/wiki/ISO_8601#Durations

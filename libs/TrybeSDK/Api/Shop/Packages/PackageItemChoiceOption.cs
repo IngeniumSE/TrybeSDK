@@ -14,7 +14,7 @@ public class PackageItemChoiceOption : Model<PackageItemChoiceOption>
 	/// </summary>
 	/// <value>The ID of the item type.</value>	
 	[JsonPropertyName("id")]
-	public required string Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	/// The type of item this option represents.
