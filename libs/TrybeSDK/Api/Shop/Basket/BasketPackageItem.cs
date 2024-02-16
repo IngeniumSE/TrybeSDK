@@ -64,7 +64,7 @@ public class BasketPackageItem : Model<BasketPackageItem>
 	/// </summary>
 	/// <value>The duration of this item.</value>
 	[JsonPropertyName("duration")]
-	public string? Duration { get; set; }
+	public int? Duration { get; set; }
 
 	/// <summary>
 	/// The date and time that the item is reserved until.
