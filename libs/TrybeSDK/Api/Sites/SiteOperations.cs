@@ -80,7 +80,8 @@ public partial class SiteOperations(PathString path, ApiClient client) : ISiteOp
 		Ensure.IsNotNullOrEmpty(siteId, nameof(siteId));
 		var request = new TrybeRequest(HttpMethod.Delete, path + $"/{siteId}");
 
-		return await client.SendAsync(request, cancellationToken);
+		return await client.SendAsync(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Site>> GetSiteAsync(
@@ -90,7 +91,8 @@ public partial class SiteOperations(PathString path, ApiClient client) : ISiteOp
 		Ensure.IsNotNullOrEmpty(siteId, nameof(siteId));
 		var request = new TrybeRequest(HttpMethod.Get, path + $"/{siteId}");
 
-		return await client.FetchAsync<Site>(request, cancellationToken);
+		return await client.FetchAsync<Site>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Site[]>> GetSitesAsync(
@@ -107,7 +109,8 @@ public partial class SiteOperations(PathString path, ApiClient client) : ISiteOp
 
 		var request = new TrybeRequest(HttpMethod.Get, path, query);
 
-		return await client.FetchAsync<Site[]>(request, cancellationToken);
+		return await client.FetchAsync<Site[]>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<TrybeResponse<Site>> UpdateSiteAsync(
@@ -120,7 +123,8 @@ public partial class SiteOperations(PathString path, ApiClient client) : ISiteOp
 
 		var request = new TrybeRequest<Site>(HttpMethod.Put, path + $"/{siteId}", site);
 
-		return await client.FetchAsync<Site>(request, cancellationToken);
+		return await client.FetchAsync<Site>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }
 

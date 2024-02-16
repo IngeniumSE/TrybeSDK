@@ -42,6 +42,7 @@ public class PackageOperations(PathString path, ApiClient client) : IPackageOper
 
 		var request = new TrybeRequest(HttpMethod.Get, path + $"/{offeringId}");
 
-		return await client.FetchAsync<Package>(request, cancellationToken);
+		return await client.FetchAsync<Package>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }

@@ -51,6 +51,7 @@ public class OfferingOperations(PathString path, ApiClient client) : IOfferingOp
 
 		var request = new TrybeRequest(HttpMethod.Get, path, query);
 
-		return await client.FetchAsync<ShopOffering[]>(request);
+		return await client.FetchAsync<ShopOffering[]>(request)
+			.ConfigureAwait(false);
 	}
 }

@@ -37,21 +37,25 @@ public abstract class ApiClient
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken)
+				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse(
 				httpReq.Method,
 				httpReq.RequestUri,
-				httpResp);
+				httpResp)
+				.ConfigureAwait(false);
 
 			if (_settings.CaptureRequestContent && httpReq.Content is not null)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
 			}
 
 			if (_settings.CaptureResponseContent && httpResp.Content is not null)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false); ;
 			}
 
 			return transformedResponse;
@@ -82,16 +86,19 @@ public abstract class ApiClient
 			var transformedResponse = await TransformResponse(
 				httpReq.Method,
 				httpReq.RequestUri,
-				httpResp);
+				httpResp)
+					.ConfigureAwait(false); ;
 
 			if (_settings.CaptureRequestContent && httpReq.Content is not null)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
 			}
 
 			if (_settings.CaptureResponseContent && httpResp.Content is not null)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
 			}
 
 			return transformedResponse;
@@ -117,21 +124,25 @@ public abstract class ApiClient
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken)
+				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse<TResponse>(
 				httpReq.Method,
 				httpReq.RequestUri,
-				httpResp);
+				httpResp)
+					.ConfigureAwait(false); ;
 
 			if (_settings.CaptureRequestContent && httpReq.Content is not null)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false); ;
 			}
 
 			if (_settings.CaptureResponseContent && httpResp.Content is not null)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
 			}
 
 			return transformedResponse;
@@ -158,21 +169,25 @@ public abstract class ApiClient
 
 		try
 		{
-			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken)
+				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse<TResponse>(
 				httpReq.Method,
 				httpReq.RequestUri,
-				httpResp);
+				httpResp)
+					.ConfigureAwait(false); ;
 
 			if (_settings.CaptureRequestContent && httpReq.Content is not null)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
 			}
 
 			if (_settings.CaptureResponseContent && httpResp.Content is not null)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
 			}
 
 			return transformedResponse;
@@ -232,7 +247,9 @@ public abstract class ApiClient
 			Error error;
 			if (response.Content is not null)
 			{
-				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(cancellationToken);
+				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(cancellationToken)
+					.ConfigureAwait(false);
+
 				if (result?.Message is not { Length: > 0 })
 				{
 					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
@@ -285,7 +302,9 @@ public abstract class ApiClient
 			if (response.Content is not null)
 			{
 				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(
-					_deserializerOptions, cancellationToken);
+					_deserializerOptions, cancellationToken)
+					.ConfigureAwait(false);
+
 				if (result?.Message is not { Length: > 0 })
 				{
 					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
@@ -312,7 +331,8 @@ public abstract class ApiClient
 			if (response.Content is not null)
 			{
 				data = await response.Content.ReadFromJsonAsync<DataContainer<TResponse>>(
-					_deserializerOptions, cancellationToken);
+					_deserializerOptions, cancellationToken)
+					.ConfigureAwait(false); ;
 
 				if (data?.Meta is not null)
 				{

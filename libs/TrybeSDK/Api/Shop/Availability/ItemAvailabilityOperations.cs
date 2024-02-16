@@ -45,7 +45,8 @@ public class ItemAvailabilityOperations(PathString path, ApiClient client) : IIt
 
 		var request = new TrybeRequest(HttpMethod.Get, path + "/offering-dates", query);
 
-		return await client.FetchAsync<OfferingDateAvailability[]>(request, cancellationToken);
+		return await client.FetchAsync<OfferingDateAvailability[]>(request, cancellationToken)
+			.ConfigureAwait(false);
 	}
 }
 

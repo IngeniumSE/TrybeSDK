@@ -33,6 +33,7 @@ partial class OrderOperations
 
 		var request = new TrybeRequest<OrderNote>(HttpMethod.Post, path + $"/{orderId}/notes", note);
 
-		return await client.FetchAsync<OrderNote, OrderNote>(request, cancellationToken);
+		return await client.FetchAsync<OrderNote, OrderNote>(request, cancellationToken)
+			 .ConfigureAwait(false);
 	}
 }
