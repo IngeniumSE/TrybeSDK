@@ -1,6 +1,7 @@
 ﻿// This work is licensed under the terms of the MIT license.
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -32,26 +33,38 @@ public abstract class ApiClient
 		CancellationToken cancellationToken = default)
 	{
 		Ensure.IsNotNull(request, nameof(request));
-
 		var httpReq = CreateHttpRequest(request);
-		var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		var transformedResponse = await TransformResponse(
-			httpReq.Method,
-			httpReq.RequestUri,
-			httpResp);
-
-		if (_settings.CaptureRequestContent && httpReq.Content is not null)
+		try
 		{
-			transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
-		}
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			var transformedResponse = await TransformResponse(
+				httpReq.Method,
+				httpReq.RequestUri,
+				httpResp);
+
+			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			{
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+			}
+
+			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			{
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			}
+
+			return transformedResponse;
+		}
+		catch (Exception ex)
 		{
-			transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			return new TrybeResponse(
+				httpReq.Method,
+				httpReq.RequestUri,
+				false,
+				(HttpStatusCode)0,
+				error: new Error(ex.Message, exception: ex));
 		}
-
-		return transformedResponse;
 	}
 
 	protected internal async Task<TrybeResponse> SendAsync<TRequest>(
@@ -60,26 +73,38 @@ public abstract class ApiClient
 		where TRequest : notnull
 	{
 		Ensure.IsNotNull(request, nameof(request));
-
 		var httpReq = CreateHttpRequest(request);
-		var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		var transformedResponse = await TransformResponse(
-			httpReq.Method,
-			httpReq.RequestUri,
-			httpResp);
-
-		if (_settings.CaptureRequestContent && httpReq.Content is not null)
+		try
 		{
-			transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
-		}
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			var transformedResponse = await TransformResponse(
+				httpReq.Method,
+				httpReq.RequestUri,
+				httpResp);
+
+			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			{
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+			}
+
+			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			{
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			}
+
+			return transformedResponse;
+		}
+		catch (Exception ex)
 		{
-			transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			return new TrybeResponse(
+				httpReq.Method,
+				httpReq.RequestUri,
+				false,
+				(HttpStatusCode)0,
+				error: new Error(ex.Message, exception: ex));
 		}
-
-		return transformedResponse;
 	}
 
 	protected internal async Task<TrybeResponse<TResponse>> FetchAsync<TResponse>(
@@ -88,26 +113,38 @@ public abstract class ApiClient
 		where TResponse : class
 	{
 		Ensure.IsNotNull(request, nameof(request));
-
 		var httpReq = CreateHttpRequest(request);
-		var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		var transformedResponse = await TransformResponse<TResponse>(
-			httpReq.Method,
-			httpReq.RequestUri,
-			httpResp);
-
-		if (_settings.CaptureRequestContent && httpReq.Content is not null)
+		try
 		{
-			transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
-		}
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			var transformedResponse = await TransformResponse<TResponse>(
+				httpReq.Method,
+				httpReq.RequestUri,
+				httpResp);
+
+			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			{
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+			}
+
+			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			{
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			}
+
+			return transformedResponse;
+		}
+		catch (Exception ex)
 		{
-			transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			return new TrybeResponse<TResponse>(
+				httpReq.Method,
+				httpReq.RequestUri,
+				false,
+				(HttpStatusCode)0,
+				error: new Error(ex.Message, exception: ex));
 		}
-
-		return transformedResponse;
 	}
 
 	protected internal async Task<TrybeResponse<TResponse>> FetchAsync<TRequest, TResponse>(
@@ -117,26 +154,38 @@ public abstract class ApiClient
 		where TResponse : class
 	{
 		Ensure.IsNotNull(request, nameof(request));
-
 		var httpReq = CreateHttpRequest(request);
-		var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		var transformedResponse = await TransformResponse<TResponse>(
-			httpReq.Method,
-			httpReq.RequestUri,
-			httpResp);
-
-		if (_settings.CaptureRequestContent && httpReq.Content is not null)
+		try
 		{
-			transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
-		}
+			var httpResp = await _http.SendAsync(httpReq, cancellationToken);
 
-		if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			var transformedResponse = await TransformResponse<TResponse>(
+				httpReq.Method,
+				httpReq.RequestUri,
+				httpResp);
+
+			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			{
+				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync();
+			}
+
+			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			{
+				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			}
+
+			return transformedResponse;
+		}
+		catch (Exception ex)
 		{
-			transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync();
+			return new TrybeResponse<TResponse>(
+				httpReq.Method,
+				httpReq.RequestUri,
+				false,
+				(HttpStatusCode)0,
+				error: new Error(ex.Message, exception: ex));
 		}
-
-		return transformedResponse;
 	}
 	#endregion
 
