@@ -46,7 +46,7 @@ public class OfferingOperations(PathString path, ApiClient client) : IOfferingOp
 
 		var query = new QueryStringBuilder()
 			.AddParameter("site_id", siteId)
-			.AddParameter("parnter_id", partnerId)
+			.AddParameter("partner_id", partnerId)
 			.Build();
 
 		var request = new TrybeRequest(HttpMethod.Get, path, query);
