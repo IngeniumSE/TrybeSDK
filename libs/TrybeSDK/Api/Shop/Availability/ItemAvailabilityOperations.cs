@@ -41,6 +41,7 @@ public class ItemAvailabilityOperations(PathString path, ApiClient client) : IIt
 			.AddParameter("date_from", datesRequest.DateFrom.ToString("yyyy-MM-dd"))
 			.AddParameter("date_to", datesRequest.DateTo.ToString("yyyy-MM-dd"))
 			.AddParameter("quantity", datesRequest.Quantity)
+			.AddParameter("partner_id", datesRequest.PartnerId)
 			.Build();
 
 		var request = new TrybeRequest(HttpMethod.Get, path + "/offering-dates", query);
@@ -66,4 +67,7 @@ public class GetOfferingDatesRequest
 
 	[JsonPropertyName("quantity")]
 	public int Quantity { get; set; }
+
+	[JsonPropertyName("partner_id")]
+	public string PartnerId { get; set; }
 }
