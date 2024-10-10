@@ -97,7 +97,8 @@ public abstract class ApiClient
 
 		try
 		{
-			httpResp = await _http.SendAsync(httpReq, cancellationToken);
+			httpResp = await _http.SendAsync(httpReq, cancellationToken)
+				.ConfigureAwait(false);
 
 			var transformedResponse = await TransformResponse(
 				httpReq.Method,
@@ -337,7 +338,8 @@ public abstract class ApiClient
 		}
 		else
 		{
-			Error? error = await GetTrybeError();
+			Error? error = await GetTrybeError()
+				.ConfigureAwait(false);
 
 			return new TrybeResponse(
 				method,
@@ -418,7 +420,8 @@ public abstract class ApiClient
 		}
 		else
 		{
-			Error? error = await GetTrybeError();
+			Error? error = await GetTrybeError()
+				.ConfigureAwait(false);
 
 			return new TrybeResponse<TResponse>(
 				method,
