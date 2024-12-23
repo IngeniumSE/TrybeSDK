@@ -348,9 +348,24 @@ public abstract class ApiClient
 			Meta? meta = default;
 			if (content is not null || stringContent is { Length: >0 })
 			{
-				data = stringContent is { Length: > 0 }
-					? JsonSerializer.Deserialize<DataContainer<TResponse>>(stringContent, _deserializerOptions)
-					: await JsonSerializer.DeserializeAsync<DataContainer<TResponse>>(content!, _deserializerOptions).ConfigureAwait(false);
+				try
+				{
+					data = stringContent is { Length: > 0 }
+						? JsonSerializer.Deserialize<DataContainer<TResponse>>(stringContent, _deserializerOptions)
+						: await JsonSerializer.DeserializeAsync<DataContainer<TResponse>>(content!, _deserializerOptions).ConfigureAwait(false);
+				}
+				catch (Exception ex)
+				{
+					return new(
+						new TrybeResponse<TResponse>(
+							method,
+							uri,
+							response.IsSuccessStatusCode,
+							response.StatusCode,
+							rateLimiting: rateLimiting,
+							error: new Error(ex.Message, exception: ex)
+						), stringContent);
+				}
 
 				if (data?.Meta is not null)
 				{
