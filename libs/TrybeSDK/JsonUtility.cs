@@ -28,7 +28,8 @@ static class JsonUtility
 		JsonSerializerOptions options = new()
 		{
 			WriteIndented = false,
-			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+			NumberHandling = JsonNumberHandling.AllowReadingFromString
 		};
 
 		options.Converters.Add(new ObjectDictionaryJsonConverter());
