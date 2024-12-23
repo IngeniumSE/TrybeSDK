@@ -2,8 +2,10 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -33,7 +35,7 @@ public abstract class ApiClient
 		CancellationToken cancellationToken = default)
 	{
 		Ensure.IsNotNull(request, nameof(request));
-		var httpReq = CreateHttpRequest(request);
+		using var httpReq = CreateHttpRequest(request);
 		HttpResponseMessage? httpResp = null;
 
 		try
@@ -41,22 +43,15 @@ public abstract class ApiClient
 			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
-			var transformedResponse = await TransformResponse(
+			var (transformedResponse, capturedResponseContent) = await TransformResponse(
 				httpReq.Method,
 				httpReq.RequestUri,
 				httpResp)
 				.ConfigureAwait(false);
 
-			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			if (_settings.CaptureResponseContent || !httpResp.IsSuccessStatusCode)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
-			}
-
-			if (_settings.CaptureResponseContent && httpResp.Content is not null)
-			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
+				transformedResponse.ResponseContent = capturedResponseContent;
 			}
 
 			return transformedResponse;
@@ -92,7 +87,7 @@ public abstract class ApiClient
 		where TRequest : notnull
 	{
 		Ensure.IsNotNull(request, nameof(request));
-		var httpReq = CreateHttpRequest(request);
+		var (httpReq, capturedRequestContent) = CreateHttpRequest(request);
 		HttpResponseMessage? httpResp = null;
 
 		try
@@ -100,22 +95,20 @@ public abstract class ApiClient
 			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
-			var transformedResponse = await TransformResponse(
+			var (transformedResponse, capturedResponseContent) = await TransformResponse(
 				httpReq.Method,
 				httpReq.RequestUri,
 				httpResp)
 					.ConfigureAwait(false); ;
 
-			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			if (_settings.CaptureRequestContent)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
+				transformedResponse.RequestContent = capturedRequestContent;
 			}
 
-			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			if (_settings.CaptureResponseContent || !httpResp.IsSuccessStatusCode)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
+				transformedResponse.ResponseContent = capturedResponseContent;
 			}
 
 			return transformedResponse;
@@ -163,13 +156,7 @@ public abstract class ApiClient
 				httpReq.Method,
 				httpReq.RequestUri,
 				httpResp)
-					.ConfigureAwait(false); ;
-
-			if ((_settings.CaptureRequestContent || !httpResp.IsSuccessStatusCode) && httpReq.Content is not null)
-			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
-			}
+					.ConfigureAwait(false);
 
 			if (_settings.CaptureResponseContent || !httpResp.IsSuccessStatusCode)
 			{
@@ -201,6 +188,18 @@ public abstract class ApiClient
 
 			return response;
 		}
+		finally
+		{
+			if (httpReq is not null)
+			{
+				httpReq.Dispose();
+			}
+
+			if (httpResp is not null)
+			{
+				httpResp.Dispose();
+			}
+		}
 	}
 
 	protected internal async Task<TrybeResponse<TResponse>> FetchAsync<TRequest, TResponse>(
@@ -210,7 +209,7 @@ public abstract class ApiClient
 		where TResponse : class
 	{
 		Ensure.IsNotNull(request, nameof(request));
-		var httpReq = CreateHttpRequest(request);
+		var (httpReq, capturedRequestContent) = CreateHttpRequest(request);
 		HttpResponseMessage? httpResp = null;
 
 		try
@@ -224,10 +223,9 @@ public abstract class ApiClient
 				httpResp)
 					.ConfigureAwait(false); ;
 
-			if ((_settings.CaptureRequestContent || !httpResp.IsSuccessStatusCode) && httpReq.Content is not null)
+			if (_settings.CaptureRequestContent)
 			{
-				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
+				transformedResponse.RequestContent = capturedRequestContent;
 			}
 
 			if (_settings.CaptureResponseContent || !httpResp.IsSuccessStatusCode)
@@ -259,6 +257,18 @@ public abstract class ApiClient
 			}
 
 			return response;
+		}
+		finally
+		{
+			if (httpReq is not null)
+			{
+				httpReq.Dispose();
+			}
+
+			if (httpResp is not null)
+			{
+				httpResp.Dispose();
+			}
 		}
 	}
 	#endregion
@@ -281,33 +291,54 @@ public abstract class ApiClient
 		return message;
 	}
 
-	protected internal HttpRequestMessage CreateHttpRequest<TRequest>(
+	protected internal (HttpRequestMessage, string?) CreateHttpRequest<TRequest>(
 		TrybeRequest<TRequest> request)
 		where TRequest : notnull
 	{
 		var message = CreateHttpRequest((TrybeRequest)request);
+		string? capturedContent = null;
 
-		message.Content = JsonContent.Create(
-			inputValue: request.Data, options: _serializerOptions);
+		if (_settings.CaptureRequestContent)
+		{
+			capturedContent = JsonSerializer.Serialize(request.Data, _serializerOptions);
+			message.Content = new StringContent(capturedContent, Encoding.UTF8, "application/json");
+		}
+		else
+		{
+			message.Content = JsonContent.Create(
+				inputValue: request.Data, options: _serializerOptions);
+		}
 
-		return message;
+		return (message, capturedContent);
 	}
 	#endregion
 
 	#region Postprocessing
-	protected internal async Task<TrybeResponse> TransformResponse(
+	protected internal async Task<(TrybeResponse, string?)> TransformResponse(
 		HttpMethod method,
 		Uri uri,
 		HttpResponseMessage response,
 		CancellationToken cancellationToken = default)
 	{
-		async Task<Error> GetTrybeError()
+		var rateLimiting = GetRateLimiting(response);
+
+		if (response.IsSuccessStatusCode)
+		{
+			return (new TrybeResponse(
+				method,
+				uri,
+				response.IsSuccessStatusCode,
+				response.StatusCode,
+				rateLimiting: rateLimiting), null);
+		}
+		else
 		{
 			Error error;
-			if (response.Content is not null)
-			{
-				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(cancellationToken)
+			string? stringContent = await response.Content.ReadAsStringAsync()
 					.ConfigureAwait(false);
+			if (stringContent is { Length: >0 })
+			{
+				var result = JsonSerializer.Deserialize<ErrorContainer>(stringContent, _deserializerOptions);
 
 				if (result?.Message is not { Length: > 0 })
 				{
@@ -323,29 +354,14 @@ public abstract class ApiClient
 				error = new Error(Resources.ApiClient_NoErrorMessage);
 			}
 
-			return error;
-		}
-
-		if (response.IsSuccessStatusCode)
-		{
-			return new TrybeResponse(
-				method,
-				uri,
-				response.IsSuccessStatusCode,
-				response.StatusCode);
-		}
-		else
-		{
-			Error? error = await GetTrybeError()
-				.ConfigureAwait(false);
-
-			return new TrybeResponse(
+			return (new TrybeResponse(
 				method,
 				uri,
 				response.IsSuccessStatusCode,
 				response.StatusCode,
+				rateLimiting: rateLimiting,
 				error: error
-			);
+			), stringContent);
 		}
 	}
 
@@ -356,32 +372,6 @@ public abstract class ApiClient
 		CancellationToken cancellationToken = default)
 		where TResponse : class
 	{
-		async Task<Error> GetTrybeError()
-		{
-			Error error;
-			if (response.Content is not null)
-			{
-				var result = await response.Content.ReadFromJsonAsync<ErrorContainer>(
-					_deserializerOptions, cancellationToken)
-					.ConfigureAwait(false);
-
-				if (result?.Message is not { Length: > 0 })
-				{
-					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
-				}
-				else
-				{
-					error = new(result.Message, result.Errors);
-				}
-			}
-			else
-			{
-				error = new Error(Resources.ApiClient_NoErrorMessage);
-			}
-
-			return error;
-		}
-
 		var rateLimiting = GetRateLimiting(response);
 
 		Stream? content = null;
@@ -404,11 +394,11 @@ public abstract class ApiClient
 		{
 			DataContainer<TResponse>? data = default;
 			Meta? meta = default;
-			if (content is not null)
+			if (content is not null || stringContent is { Length: >0 })
 			{
 				data = stringContent is { Length: > 0 }
 					? JsonSerializer.Deserialize<DataContainer<TResponse>>(stringContent, _deserializerOptions)
-					: await JsonSerializer.DeserializeAsync<DataContainer<TResponse>>(content, _deserializerOptions).ConfigureAwait(false);
+					: await JsonSerializer.DeserializeAsync<DataContainer<TResponse>>(content!, _deserializerOptions).ConfigureAwait(false);
 
 				if (data?.Meta is not null)
 				{
@@ -434,8 +424,24 @@ public abstract class ApiClient
 		}
 		else
 		{
-			Error? error = await GetTrybeError()
-				.ConfigureAwait(false);
+			Error error;
+			if (stringContent is not null)
+			{
+				var result = JsonSerializer.Deserialize<ErrorContainer>(stringContent, _deserializerOptions);
+
+				if (result?.Message is not { Length: > 0 })
+				{
+					error = new(Resources.ApiClient_UnknownResponse, result?.Errors);
+				}
+				else
+				{
+					error = new(result.Message, result.Errors);
+				}
+			}
+			else
+			{
+				error = new Error(Resources.ApiClient_NoErrorMessage);
+			}
 
 			return (new TrybeResponse<TResponse>(
 				method,
