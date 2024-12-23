@@ -159,22 +159,21 @@ public abstract class ApiClient
 			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
-			var transformedResponse = await TransformResponse<TResponse>(
+			var (transformedResponse, capturedResponseContent) = await TransformResponse<TResponse>(
 				httpReq.Method,
 				httpReq.RequestUri,
 				httpResp)
 					.ConfigureAwait(false); ;
 
-			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			if ((_settings.CaptureRequestContent || !httpResp.IsSuccessStatusCode) && httpReq.Content is not null)
 			{
 				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
 					.ConfigureAwait(false); ;
 			}
 
-			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			if (_settings.CaptureResponseContent || !httpResp.IsSuccessStatusCode)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
+				transformedResponse.ResponseContent = capturedResponseContent;
 			}
 
 			return transformedResponse;
@@ -219,22 +218,21 @@ public abstract class ApiClient
 			httpResp = await _http.SendAsync(httpReq, cancellationToken)
 				.ConfigureAwait(false);
 
-			var transformedResponse = await TransformResponse<TResponse>(
+			var (transformedResponse, capturedResponseContent) = await TransformResponse<TResponse>(
 				httpReq.Method,
 				httpReq.RequestUri,
 				httpResp)
 					.ConfigureAwait(false); ;
 
-			if (_settings.CaptureRequestContent && httpReq.Content is not null)
+			if ((_settings.CaptureRequestContent || !httpResp.IsSuccessStatusCode) && httpReq.Content is not null)
 			{
 				transformedResponse.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
+					.ConfigureAwait(false); ;
 			}
 
-			if (_settings.CaptureResponseContent && httpResp.Content is not null)
+			if (_settings.CaptureResponseContent || !httpResp.IsSuccessStatusCode)
 			{
-				transformedResponse.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
+				transformedResponse.ResponseContent = capturedResponseContent;
 			}
 
 			return transformedResponse;
@@ -351,7 +349,7 @@ public abstract class ApiClient
 		}
 	}
 
-	protected internal async Task<TrybeResponse<TResponse>> TransformResponse<TResponse>(
+	protected internal async Task<(TrybeResponse<TResponse>, string?)> TransformResponse<TResponse>(
 		HttpMethod method,
 		Uri uri,
 		HttpResponseMessage response,
@@ -386,15 +384,31 @@ public abstract class ApiClient
 
 		var rateLimiting = GetRateLimiting(response);
 
+		Stream? content = null;
+		string? stringContent = null;
+		if (response.Content is not null)
+		{
+			if (_settings.CaptureResponseContent || !response.IsSuccessStatusCode)
+			{
+				stringContent = await response.Content.ReadAsStringAsync()
+					.ConfigureAwait(false);
+			}
+			else
+			{
+				content = await response.Content.ReadAsStreamAsync()
+				.ConfigureAwait(false);
+			}
+		}
+
 		if (response.IsSuccessStatusCode)
 		{
 			DataContainer<TResponse>? data = default;
 			Meta? meta = default;
-			if (response.Content is not null)
+			if (content is not null)
 			{
-				data = await response.Content.ReadFromJsonAsync<DataContainer<TResponse>>(
-					_deserializerOptions, cancellationToken)
-					.ConfigureAwait(false); ;
+				data = stringContent is { Length: > 0 }
+					? JsonSerializer.Deserialize<DataContainer<TResponse>>(stringContent, _deserializerOptions)
+					: await JsonSerializer.DeserializeAsync<DataContainer<TResponse>>(content, _deserializerOptions).ConfigureAwait(false);
 
 				if (data?.Meta is not null)
 				{
@@ -408,7 +422,7 @@ public abstract class ApiClient
 				}
 			}
 
-			return new TrybeResponse<TResponse>(
+			return (new TrybeResponse<TResponse>(
 				method,
 				uri,
 				response.IsSuccessStatusCode,
@@ -416,21 +430,21 @@ public abstract class ApiClient
 				data: data?.Data,
 				meta: meta,
 				rateLimiting: rateLimiting
-			);
+			), stringContent);
 		}
 		else
 		{
 			Error? error = await GetTrybeError()
 				.ConfigureAwait(false);
 
-			return new TrybeResponse<TResponse>(
+			return (new TrybeResponse<TResponse>(
 				method,
 				uri,
 				response.IsSuccessStatusCode,
 				response.StatusCode,
 				rateLimiting: rateLimiting,
 				error: error
-			);
+			), stringContent);
 		}
 	}
 
