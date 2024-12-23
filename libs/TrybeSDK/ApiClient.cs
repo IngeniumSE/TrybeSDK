@@ -65,18 +65,6 @@ public abstract class ApiClient
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
 
-			if (httpReq?.Content is not null)
-			{
-				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
-			}
-
-			if (httpResp?.Content is not null)
-			{
-				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
-			}
-
 			return response;
 		}
 	}
@@ -122,18 +110,6 @@ public abstract class ApiClient
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
 
-			if (httpReq?.Content is not null)
-			{
-				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
-			}
-
-			if (httpResp?.Content is not null)
-			{
-				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
-			}
-
 			return response;
 		}
 	}
@@ -173,18 +149,6 @@ public abstract class ApiClient
 				false,
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
-
-			if (httpReq?.Content is not null)
-			{
-				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
-			}
-
-			if (httpResp?.Content is not null)
-			{
-				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
-			}
 
 			return response;
 		}
@@ -243,18 +207,6 @@ public abstract class ApiClient
 				false,
 				(HttpStatusCode)0,
 				error: new Error(ex.Message, exception: ex));
-
-			if (httpReq?.Content is not null)
-			{
-				response.RequestContent = await httpReq.Content.ReadAsStringAsync()
-					.ConfigureAwait(false);
-			}
-
-			if (httpResp?.Content is not null)
-			{
-				response.ResponseContent = await httpResp.Content.ReadAsStringAsync()
-					.ConfigureAwait(false); ;
-			}
 
 			return response;
 		}
